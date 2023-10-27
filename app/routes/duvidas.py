@@ -7,7 +7,6 @@ import uuid
 
 @duvidas_bp.route("/create-duvidas", methods=["POST"])
 def createDuvida():
-  session['user'] = 'guxtavodev'
   data = request.get_json()
   texto = data["texto"]
   autor = session["user"]

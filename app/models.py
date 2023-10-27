@@ -22,7 +22,7 @@ class Artigo(db.Model):
   tags = db.Column(db.String(64))
   likes = db.Column(db.Integer)
 
-  def __init__(self, titulo, texto, autor, data, categoria, tags, likes):
+  def __init__(self, titulo, texto, autor, data, categoria, tags, likes, id):
     self.titulo = titulo
     self.texto = texto
     self.autor = autor
@@ -30,7 +30,7 @@ class Artigo(db.Model):
     self.categoria = categoria
     self.tags = tags
     self.likes = likes
-
+    self.id = id
 
 class Material(db.Model):
   id = db.Column(db.String(), primary_key=True)

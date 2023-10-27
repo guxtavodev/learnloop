@@ -4,6 +4,8 @@ from app.routes import artigos_bp
 from app.models import Artigo, User
 from app import db
 from passlib.hash import bcrypt_sha256
+import uuid
+import markdown
 
 @artigos_bp.route("/")
 def homepage():
@@ -36,7 +38,7 @@ def criarArtigo():
         data = "sla"  # Defina o valor para 'data'
 
         # Cria um novo objeto de Artigo e o adiciona ao banco de dados
-        newArtigo = Artigo(titulo=title, texto=conteudo, autor=user, data=data, categoria=categoria, tags=tags, likes=0, id=str(uuid.uuid4()))
+        newArtigo = Artigo(titulo=title, texto=markdown.markdown(conteudo), autor=user, data=data, categoria=categoria, tags=tags, likes=0, id=str(uuid.uuid4()))
         db.session.add(newArtigo)
         db.session.commit()
 
@@ -50,8 +52,9 @@ def criarArtigo():
 @artigos_bp.route("/delete-artigo/<id>", methods=["GET"])
 def deleteArtigo(id):
     artigo = Artigo.query.filter_by(id=id).first()
-    user = User.query.filter_by(id=id).first()
-
+    
+    user = User.query.filter_by(id=artigo.autor).first()
+    
     if artigo:
         senha = request.args.get("senha")
 
@@ -59,7 +62,9 @@ def deleteArtigo(id):
         if bcrypt_sha256.verify(senha, user.password):
             db.session.delete(artigo)
             db.session.commit()
-            return redirect("/")
+            return jsonify({
+              "msg": "success"
+            })
         else:
             return redirect("/artigo/"+artigo.id)
     else:
@@ -84,10 +89,11 @@ def deslikePost(id):
 # Rota para visualizar um artigo por ID
 @artigos_bp.route("/artigo/<id>")
 def artigoPage(id):
+    print(session['user'])
     artigo = Artigo.query.filter_by(id=id).first()
-
+    autor = User.query.filter_by(id=artigo.autor).first()
     if artigo:
-        return render_template("post.html", artigo=artigo)
+        return render_template("post.html", artigo=artigo, autor=autor)
     else:
         return "<h1>Artigo Não Existe</h1"
 

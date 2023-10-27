@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}LearnLoop One{% endblock %}
+
+{% block content %}
+<div>
+  <h3>Crie seu próprio artigo</h3>
+  <form action='/create-artigo' method="POST">
+    <input type="text" placeholder="Digite o título do artigo" name="title-art">
+    <input type="text" placeholder="Digite a categoria do artigo" name="category">
+    <input type="text" placeholder="Digite as tags do artigo" name="tags">
+    <textarea placeholder="Digite o conteúdo do artigo" name="conteudo-art"></textarea>
+
+    <button type="submit">Publicar Artigo</button>
+  </form>
+</div>
+{% endblock %}

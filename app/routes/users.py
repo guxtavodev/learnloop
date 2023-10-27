@@ -1,10 +1,15 @@
-from flask import render_template, request, session, jsonify
+from flask import render_template, request, session, jsonify, redirect
 from flask.json import jsonify
 from app.routes import users_bp
 from app.models import User
 from passlib.hash import bcrypt_sha256
 from app import db
 import uuid
+
+# Rota para criar um novo usuário
+@users_bp.route("/cadastro")
+def cadastroPage():
+  return render_template("signup.html")
 
 @users_bp.route('/listar')
 def listar_usuarios():
@@ -15,19 +20,17 @@ def crip(dado):
   dado_criptografado = bcrypt_sha256.hash(dado)
   return str(dado_criptografado)
 
-@users_bp.route('/api/signup')
+@users_bp.route('/api/signup', methods=["POST"])
 def signup():
-  data = request.get_json()
-  username = data["username"]
-  password = data["password"]
-  try:
-    newUser = User(username=username, password=password, id=str(uuid.uuid4()))
-    db.session.add(newUser)
-    db.session.commit()
-    session["user"] = newUser.id 
-    return jsonify({"msg": "usuario criado com sucesso"})
-  except:
-    return jsonify({"msg": "ocorreu um erro no sistema"})
+
+  username = request.form["username"]
+  password = crip(request.form["password"])
+
+  newUser = User(username=username, password=password, id=str(uuid.uuid4()))
+  db.session.add(newUser)
+  db.session.commit()
+  session["user"] = newUser.id 
+  return redirect("/")
 
 @users_bp.route("/api/login")
 def login():
