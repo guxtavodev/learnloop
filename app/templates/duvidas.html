@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}LearnLoop One{% endblock %}
+
+{% block styled %}
+<style>
+  .list-duvidas{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+
+  .list-duvidas div{
+    max-width: 40%;
+    background: var(--corSecundaria);
+    padding: 20px;
+    border-radius: 6px;
+    font-size: 1.5em;
+  }
+
+  @media screen and (max-width: 1000px) {
+    .list-duvidas {
+      flex-direction: column
+    }
+    .list-duvidas div{
+      max-width:100%;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <button style="padding: 10px;" onclick='addDuvida()'>Criar Dúvida</button>
+
+  <div class='list-duvidas'>
+    {% for duvida in duvidas %}
+      <div>
+        <p onclick='getDuvida("{{duvida.id}}")'><strong>{{duvida.texto}}</strong></p>
+        <button style='margin-top: 1em;' onclick='responderDuvida("{{duvida.id}}")'>Responder Dúvida</button>
+      </div>
+    {% endfor %}
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{url_for('static', filename='js/duvidas.js')}}"></script>
+{% endblock %}

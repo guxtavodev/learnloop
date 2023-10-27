@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}LearnLoop One | Página Inicial{% endblock %}
+
+{% block styled %}
+<style>
+  .mapa-btn{
+    display: flex;
+    gap: 0.6em;
+    flex-wrap: wrap;
+  }
+
+  .mapa-btn button{
+    width: 40%;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 16px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h3>Welcome to LearnLoop</h3>
+  <p>Bem-vindo ao LearnLoop One, onde a aprendizagem encontra a inovação. Nossa plataforma está em constante evolução para oferecer uma experiência de ensino e aprendizado revolucionária. Aqui, você encontrará uma comunidade de estudantes, professores e entusiastas da educação que compartilham uma paixão pelo conhecimento. Nosso compromisso é fornecer ferramentas poderosas para capacitá-lo em sua jornada educacional. Prepare-se para explorar um novo mundo de possibilidades, onde o aprendizado é cativante, colaborativo e eficaz. Junte-se a nós e descubra como o LearnLoop One está moldando o futuro da educação.</p>
+</div>
+
+<div class="container">
+  <h3>Seu perfil</h3>
+  <div class="infos">
+    <p><strong>Nome de usuário:</strong> @gustavorocha</p>
+    <p><strong>Série:</strong> 1º ano</p>
+    <p><strong>ID:</strong> id do usuário</p>
+    <p><strong>Nível de contribuição:</strong> 78%</p>
+  </div>
+</div>
+
+<div class="container">
+  <h3>O que você quer fazer?</h3>
+  <div class="mapa-btn">
+    <button>Fórum de Dúvidas</button>
+    <button>Treino de redação</button>
+    <button>LearnLoop Groups</button>
+    <button>Projetos FECIBA</button>
+  </div>
+</div>
+{% endblock %}

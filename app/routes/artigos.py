@@ -5,6 +5,10 @@ from app.models import Artigo, User
 from app import db
 from passlib.hash import bcrypt_sha256
 
+@artigos_bp.route("/")
+def homepage():
+  return render_template("index.html")
+
 # Rota para criar um artigo (pode ser acessada via POST ou GET)
 @artigos_bp.route("/create-artigo", methods=["POST", "GET"])
 def criarArtigo():

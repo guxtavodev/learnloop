@@ -1,4 +1,4 @@
-from app import db
+from app import db, app
 
 
 class User(db.Model):
@@ -44,3 +44,30 @@ class Complementos(db.Model):
   autor = db.Column(db.String())
   text = db.Column(db.String())
   artigo = db.Column(db.String())
+
+class Duvidas(db.Model):
+    __tablename__ = 'duvidas'
+    id = db.Column(db.String(), primary_key=True)
+    texto = db.Column(db.String())
+    autor = db.Column(db.String())
+
+    def __init__ (self, id, texto, autor):
+        self.id = id
+        self.texto = texto
+        self.autor = autor
+
+
+class Respostas(db.Model):
+  id = db.Column(db.String(), primary_key=True)
+  texto = db.Column(db.String())
+  autor = db.Column(db.String())
+  referencia = db.Column(db.String())
+
+  def __init__(self, id, texto, autor, referencia):
+    self.id = id
+    self.texto = texto
+    self.autor = autor
+    self.referencia = referencia 
+
+with app.app_context():
+  db.create_all()

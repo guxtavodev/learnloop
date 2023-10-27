@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Reem+Kufi+Fun:wght@400;600;700&family=Roboto:wght@300;400;500&family=Ubuntu:wght@400;500;700&display=swap');
+
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+:root{
+  --corDestaque: #aeff00;
+  --corFonteBtn: #000;
+  --corFundo: #000029;
+  --corFonte: #ffffff;
+  --corSecundaria: #0d3d00;
+  --fontTitle: 'Reem Kufi Fun', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --fontText: 'Ubuntu', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body{
+  padding-left: 2em;
+  padding-right: 2em;
+  color: var(--corFonte);
+  background: var(--corFundo);
+}
+
+header {
+  display: flex;
+  
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+header nav{
+  display: flex;
+  gap: 1em;
+}
+
+button{
+  background-color: var(--corDestaque);
+  color: var(--corFonteBtn);
+  width: 100%;
+  padding: 6px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+header h1{
+  font-family: var(--fontTitle);
+}
+
+nav a{
+  color: #fff;
+  font-size: 10px;
+}
+
+nav a span{
+  font-size: 2em;
+}
+
+.container{
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  padding: 1em;
+}
+
+.container h3{
+  font-size: 2em;
+}
+
+.infos{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+input{
+  outline: none;
+  border: 0.5px solid #000;
+  border-radius: 3px;
+  padding: 5px;
+}
