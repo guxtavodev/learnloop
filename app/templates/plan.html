@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}LearnLoop One{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h3>Plano de Estudos</h3>
+  <form action="/plan/save" method="POST">
+    <input type="text" placeholder="Digite o título do plano de estudos" name="titulo" value="{{plano.titulo}}">
+    <textarea name="texto" placeholder="Coloque os detalhes por aqui" id="texto-plan">{{plano.texto}}</textarea>
+
+    <button type="submit">Salvar Plano</button>
+  </form>
+  <button onclick="gerarPlano()">Criar plano com Learn.Ai</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="{{url_for('static', filename='js/plan.js')}}"></script>
+{% endblock %}

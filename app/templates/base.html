@@ -10,7 +10,7 @@
   </head>
   <body>
     <header>
-      <h1>LearnLoop One</h1>
+      <h1>LearnLoop</h1>
       <nav>
         <a href="/">
           <span class="material-symbols-outlined">
@@ -33,15 +33,16 @@
           logout
           </span>
         </a>
-        <form action="/search/artigos" method="GET" style="display: flex; flex-direction: row;">
-          <input style="padding: 4px;" type="text" name="pesquisa" placeholder="Digite sua pesquisa">
-          <button>
-            <span class="material-symbols-outlined">
-            search
-            </span>
-          </button>
-        </form>
+        
       </nav>
+      <form action="/search/artigos" method="GET" style="display: flex; flex-direction: row; margin-top: 1em;">
+        <input style="padding: 4px;" type="text" name="pesquisa" placeholder="Digite sua pesquisa">
+        <button>
+          <span class="material-symbols-outlined">
+          search
+          </span>
+        </button>
+      </form>
     </header>
     <body>
     {% block content %}

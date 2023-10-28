@@ -92,6 +92,10 @@ input, textarea{
   padding: 5px;
 }
 
+textarea{
+  height: 300px;
+}
+
 @media screen and (max-width: 1000px) {
   .container{
     width: 100%;

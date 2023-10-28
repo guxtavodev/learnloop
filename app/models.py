@@ -69,5 +69,17 @@ class Respostas(db.Model):
     self.autor = autor
     self.referencia = referencia 
 
+class LearnPlan(db.Model):
+  id = db.Column(db.String(), primary_key=True)
+  titulo = db.Column(db.String())
+  texto = db.Column(db.String())
+  autor = db.Column(db.String())
+
+  def __init__(self, id, titulo, texto, autor):
+    self.id = id
+    self.titulo = titulo
+    self.texto = texto 
+    self.autor = autor
+
 with app.app_context():
   db.create_all()
