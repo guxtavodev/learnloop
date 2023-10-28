@@ -1,11 +1,14 @@
 # Importação dos módulos e classes necessárias
-from flask import render_template, redirect, session, jsonify, request, url_for, make_response
+from flask import render_template, redirect, session, jsonify, request, url_for, make_response, send_file
 from app.routes import artigos_bp
 from app.models import Artigo, User
 from app import db
 from passlib.hash import bcrypt_sha256
 import uuid
 import markdown
+import os
+from docx import Document
+import json
 
 @artigos_bp.route("/")
 def homepage():
@@ -115,11 +118,29 @@ def buscar_artigo_categoria(categoria):
         response = make_response(jsonify({"message": "Nenhum artigo encontrado para esta categoria"}), 404)
         return response
 
-# Rota para buscar artigos por termos de pesquisa
+
+def search_word_files(directory, search_terms):
+  results = set()  # Usando um conjunto para evitar duplicatas
+  
+  for filename in os.listdir(directory):
+      if filename.endswith(".docx"):
+          file_path = os.path.join(directory, filename)
+          document = Document(file_path)
+  
+          for paragraph in document.paragraphs:
+              for run in paragraph.runs:
+                  text = run.text
+                  for term in search_terms:
+                      if term in text:
+                          results.add(filename)  # Adicione o nome do arquivo ao conjunto
+  
+  return [{"file_name": filename} for filename in results]
+
+# Sua rota para buscar artigos por termos de pesquisa
 @artigos_bp.route("/search/artigos")
 def artigosSearch():
-    pesquisa = request.args.get("pesquisa")
-    pesquisa = pesquisa.lower()  # Converter a pesquisa para letras minúsculas para pesquisa insensível a maiúsculas/minúsculas
+    pesquisa_i = request.args.get("pesquisa")
+    pesquisa = pesquisa_i.lower()  # Converter a pesquisa para letras minúsculas para pesquisa insensível a maiúsculas/minúsculas
 
     # Realize a pesquisa em várias colunas usando operadores 'ilike' para correspondência parcial e insensível a maiúsculas/minúsculas
     artigos = Artigo.query.filter(
@@ -130,4 +151,42 @@ def artigosSearch():
         (Artigo.tags.ilike(f"%{pesquisa}%"))
     ).all()
 
-    return jsonify({"artigos": artigos})
+    # Diretório onde os documentos do Word estão localizados
+    directory_path = "app/static/feciba"
+    # Termos de pesquisa
+    search_terms = pesquisa_i.split(" ")
+    print(search_terms)
+    # Realiza a pesquisa nos documentos do Word
+    word_search_results = search_word_files(directory_path, search_terms)
+    print(word_search_results)
+    # Exibe os resultados da pesquisa nos artigos e nos documentos do Word
+    return render_template("feed.html", artigos=artigos, feciba_results=word_search_results)
+
+@artigos_bp.route("/download-file/<filename>")
+def download_file(filename):
+    # Diretório onde os documentos do Word estão localizados
+    directory_path = os.path.abspath("app/static/feciba")
+
+    file_path = os.path.join(directory_path, filename)
+
+    # Verifica se o arquivo existe e retorna-o para download
+    if os.path.exists(file_path):
+        return send_file(file_path, as_attachment=True)
+    else:
+        return "Arquivo não encontrado", 404
+
+@artigos_bp.route("/feed/projetos-feciba")
+def feed_projetos_feciba():
+    # Diretório onde os documentos do Word dos projetos FECIBA estão localizados
+    directory_path = "app/static/feciba"
+
+    # Lista todos os arquivos no diretório FECIBA
+    projetos_feciba = [{"file_name": filename} for filename in os.listdir(directory_path) if filename.endswith(".docx")]
+
+    return render_template("feed.html", artigos=None, feciba_results=projetos_feciba)
+
+@artigos_bp.route("/feed/artigos")
+def feed_artigos():
+    # Lógica para obter e exibir o feed de artigos normais
+    artigos = Artigo.query.all()
+    return render_template("feed.html", artigos=artigos, feciba_results=None)

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}LearnLoop One{% endblock %}
+
+{% block styled %}
+<style>
+  .list-artigos{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .artigo{
+    padding: 7px;
+    border: 0.5px solid #ffffff;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h3>Lista de artigos</h3>
+  <div class="list-artigos">
+    {% if artigos %}
+    {% for artigo in artigos %}
+    <div class="artigo">
+      <strong>{{artigo.titulo}}</strong>
+      <small>{{artigo.categoria}}</small>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>Nenhum resultado encontrado.</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container">
+  <h3>Pesquisas que podem ajudar:</h3>
+  <div class="list-artigos">
+    {% if feciba_results %}
+      {% for artigo in feciba_results %}
+        <div class="artigo">
+          <strong onclick="window.location.href = '/download-file/{{artigo.file_name}}'">{{artigo.file_name}}</strong>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Nenhum resultado encontrado.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

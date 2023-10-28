@@ -16,6 +16,12 @@
     font-weight: 700;
     font-size: 16px;
   }
+
+  @media screen and (max-width: 1000px) {
+    .mapa-btn button{
+      width: 100%;
+    }
+  }
 </style>
 {% endblock %}
 
@@ -26,22 +32,12 @@
 </div>
 
 <div class="container">
-  <h3>Seu perfil</h3>
-  <div class="infos">
-    <p><strong>Nome de usuário:</strong> @gustavorocha</p>
-    <p><strong>Série:</strong> 1º ano</p>
-    <p><strong>ID:</strong> id do usuário</p>
-    <p><strong>Nível de contribuição:</strong> 78%</p>
-  </div>
-</div>
-
-<div class="container">
   <h3>O que você quer fazer?</h3>
   <div class="mapa-btn">
-    <button>Fórum de Dúvidas</button>
+    <button onclick="window.location.href='/feed/duvidas'">Fórum de Dúvidas</button>
     <button>Treino de redação</button>
     <button>LearnLoop Groups</button>
-    <button>Projetos FECIBA</button>
+    <button onclick="window.location.href = '/feed/projetos-feciba'">Projetos FECIBA</button>
   </div>
 </div>
 {% endblock %}

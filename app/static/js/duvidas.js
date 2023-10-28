@@ -93,3 +93,28 @@ function responderDuvida(duvidaId) {
     }
   });
 }
+
+
+function search() {
+  var search = prompt("Digite o que você quer pesquisar:")
+  if(search == false) {
+    return;
+  } else {
+    axios.get("/search/artigos?pesquisa="+search)
+  }
+}
+
+function excluirConta() {
+  var senha = prompt("Digite sua senha para deletar sua conta:")
+  if(senha === false) {
+    return;
+  } else {
+    axios.post("/api/delete-user", {
+      "senha": senha
+    }).then((r) => {
+      if(r.data.msg === "usuario deletado com sucesso") {
+        window.location.href = "/login"
+      }
+    })
+  }
+}

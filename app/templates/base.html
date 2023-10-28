@@ -17,26 +17,41 @@
           home
           </span>
         </a>
-        <a>
+ 
+        <a href="/feed/projetos-feciba">
           <span class="material-symbols-outlined">
-          search
+          description
           </span>
         </a>
-        <a>
+        <a href="/feed/artigos">
           <span class="material-symbols-outlined">
-          groups
+          feed
           </span>
         </a>
-        <a>
+        <a onclick="excluirConta()">
           <span class="material-symbols-outlined">
           logout
           </span>
         </a>
+        <form action="/search/artigos" method="GET" style="display: flex; flex-direction: row;">
+          <input style="padding: 4px;" type="text" name="pesquisa" placeholder="Digite sua pesquisa">
+          <button>
+            <span class="material-symbols-outlined">
+            search
+            </span>
+          </button>
+        </form>
       </nav>
     </header>
     <body>
     {% block content %}
 
       {% endblock %}
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="{{url_for('static', filename='js/duvidas.js')}}">
+   
+      </script>
   </body>
 </html>

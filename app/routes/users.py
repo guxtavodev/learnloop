@@ -11,6 +11,10 @@ import uuid
 def cadastroPage():
   return render_template("signup.html")
 
+@users_bp.route("/login")
+def loginPage():
+  return render_template("login.html")
+
 @users_bp.route('/listar')
 def listar_usuarios():
     usuarios = User.query.all()
@@ -32,22 +36,21 @@ def signup():
   session["user"] = newUser.id 
   return redirect("/")
 
-@users_bp.route("/api/login")
+@users_bp.route("/api/login", methods=["GET"])
 def login():
-  data = request.get_json()
-  username = data["username"]
-  password = data["password"]
+  username = request.args.get("username")
+  password = request.args.get("password")
   user = User.query.filter_by(username=username).first()
   if user and bcrypt_sha256.verify(password, user.password):
     session["user"] = user.id
-    return jsonify({"msg": "login efetuado com sucesso"})
+    return redirect("/")
   else:
-    return jsonify({"msg": "login ou senha incorretos"})
+    return "<h1>Usuário ou senha incorreto</h1>"
 
 @users_bp.route("/api/logout")
 def logout():
   session.clear()
-  return jsonify({"msg": "logout efetuado com sucesso"})
+  return redirect("/login")
 
 @users_bp.route("/api/user")
 def user():
@@ -59,6 +62,7 @@ def user():
 def delete_user():
   user_id = session.get("user")
   user = User.query.filter_by(id=user_id).first()
+  senha = request.get_json()["senha"]
   db.session.delete(user)
   db.session.commit()
   session.clear()
@@ -73,3 +77,4 @@ def update_user():
   user.password = data["password"]
   db.session.commit()
   return jsonify({"msg": "usuario atualizado com sucesso"})
+
