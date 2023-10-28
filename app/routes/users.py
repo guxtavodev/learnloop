@@ -9,11 +9,21 @@ import uuid
 # Rota para criar um novo usuário
 @users_bp.route("/cadastro")
 def cadastroPage():
-  return render_template("signup.html")
+  try:
+    user = session["user"]
+    if user:
+      return redirect("/")
+  except:
+    return render_template("signup.html")
 
 @users_bp.route("/login")
 def loginPage():
-  return render_template("login.html")
+  try:
+    user = session["user"]
+    if user:
+      return redirect("/")
+  except:
+    return render_template("login.html")
 
 @users_bp.route('/listar')
 def listar_usuarios():
@@ -63,10 +73,13 @@ def delete_user():
   user_id = session.get("user")
   user = User.query.filter_by(id=user_id).first()
   senha = request.get_json()["senha"]
-  db.session.delete(user)
-  db.session.commit()
-  session.clear()
-  return jsonify({"msg": "usuario deletado com sucesso"})
+  if bcrypt_sha256.verify(senha, user.password):
+    db.session.delete(user)
+    db.session.commit()
+    session.clear()
+    return jsonify({"msg": "usuario deletado com sucesso"})
+  else:
+    return jsonify({"msg": "Senha incorreta"})
 
 @users_bp.route("/api/update-user", methods=["POST"])
 def update_user():

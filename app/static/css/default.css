@@ -96,6 +96,10 @@ textarea{
   height: 300px;
 }
 
+small a{
+  color: #fff;
+}
+
 @media screen and (max-width: 1000px) {
   .container{
     width: 100%;

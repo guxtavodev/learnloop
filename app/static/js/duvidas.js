@@ -114,6 +114,12 @@ function excluirConta() {
     }).then((r) => {
       if(r.data.msg === "usuario deletado com sucesso") {
         window.location.href = "/login"
+      } else {
+        Swal.fire({
+          title: 'Erro!',
+          text: 'Senha incorreta!',
+          icon: 'error',
+        });
       }
     })
   }
