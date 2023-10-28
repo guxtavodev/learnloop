@@ -31,15 +31,16 @@ def serialize_duvida(duvida):
     return {
         'id': duvida.id,
         'texto': duvida.texto,
-        'autor': duvida.autor,
+        'autor': User.query.filter_by(id=duvida.autor).first().username,
         # Outros campos do objeto Duvidas
     }
 
 def serialize_resposta(resposta):
+    print(resposta.autor)
     return {
         'id': resposta.id,
         'texto': resposta.texto,
-        'autor': resposta.autor,
+        'autor': User.query.filter_by(id=resposta.autor).first().username or "não indentificado",
         'referencia': resposta.referencia,
         # Outros campos do objeto Respostas
     }
