@@ -1,10 +1,19 @@
 <html>
   <head>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "jhgb83crkv");
+    </script>
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="{{url_for('static', filename='css/default.css')}}">
+    <link rel="icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/png">
+    <link rel="manifest" href="{{url_for('static', filename='manifest.json')}}">
     {% block styled %}
     {% endblock %}
   </head>
@@ -48,6 +57,19 @@
     {% block content %}
 
       {% endblock %}
+      <script>
+          if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                  navigator.serviceWorker.register("{{ url_for('static', filename='sw.js') }}")
+                      .then(function(registration) {
+                          console.log('Service Worker registrado com sucesso:', registration);
+                      })
+                      .catch(function(error) {
+                          console.log('Erro ao registrar o Service Worker:', error);
+                      });
+              });
+          }
+      </script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
