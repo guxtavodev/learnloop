@@ -9,20 +9,10 @@ import uuid
 # Rota para criar um novo usuário
 @users_bp.route("/cadastro")
 def cadastroPage():
-  try:
-    user = session["user"]
-    if user:
-      return redirect("/")
-  except:
     return render_template("signup.html")
 
 @users_bp.route("/login")
 def loginPage():
-  try:
-    user = session["user"]
-    if user:
-      return redirect("/")
-  except:
     return render_template("login.html")
 
 @users_bp.route('/listar')
