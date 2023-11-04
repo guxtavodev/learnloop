@@ -9,10 +9,17 @@ import markdown
 import os
 from docx import Document
 import json
+import openai 
+
+openai.api_key = os.environ["OPENAI"]
 
 @artigos_bp.route("/")
 def homepage():
   return render_template("index.html")
+
+@artigos_bp.route("/avaliar-redacao")
+def redacion():
+  return render_template("treino-redacao.html")
 
 # Rota para criar um artigo (pode ser acessada via POST ou GET)
 @artigos_bp.route("/create-artigo", methods=["POST", "GET"])
@@ -190,3 +197,29 @@ def feed_artigos():
     # Lógica para obter e exibir o feed de artigos normais
     artigos = Artigo.query.all()
     return render_template("feed.html", artigos=artigos, feciba_results=None)
+
+@artigos_bp.route("/learn-ai/redacao", methods=["POST"])
+def gerarAvaliacaoPorIa():
+  data = request.get_json()
+  user_message = {"role": "user", "content": f"Título: {data['title']} \n Redação: {data['content']}"}
+
+  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+  conversation = [
+      {"role": "system", "content": "Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM"},
+      user_message
+  ]
+
+  # Obtenha a resposta do GPT-3
+  response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
+      messages=conversation
+  )
+
+  # Obtenha a mensagem de resposta do assistente
+  assistant_response = response.choices[0].message["content"]
+  print(assistant_response)
+
+  return jsonify({
+    "msg": "success",
+    "response": assistant_response
+  })

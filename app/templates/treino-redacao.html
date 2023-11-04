@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}LearnLoop One{% endblock %}
+
+{% block styled %}
+<style>
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form input, textarea {
+    width: 100%;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h3>Treino de Redação</h3>
+
+  <div class="form">
+    <input id="titulo" type="text" placeholder="Digite o título de sua redação">
+
+    <textarea id="conteudo" placeholder="Digite sua redação"></textarea>
+  </div>
+  <button onclick="redacao()">Enviar</button>
+</div>
+
+<div class="container">
+  <p id="resposta"></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="{{ url_for('static', filename='js/redacao.js') }}"></script>
+{% endblock %}
