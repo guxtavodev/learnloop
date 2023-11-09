@@ -2,13 +2,23 @@
 
 {% block title %}LearnLoop One{% endblock %}
 
+{% block styled %}
+<style>
+  #conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
   <h3>{{artigo.titulo}}</h3>
-  <small>{{autor.username}}</small>
+  <small>Criado por: {{autor.username}}</small>
 
-  <div>
-    <p>{{artigo.texto | safe}}</p>
+  <div id="conteudo">
+    <p >{{artigo.texto | safe}}</p>
   </div>
 
   <div class="btns">
