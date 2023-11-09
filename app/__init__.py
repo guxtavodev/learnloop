@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 # Crie as instâncias do Flask, SQLAlchemy e LoginManager
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myapp2.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data-learnloop.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '123'
 db = SQLAlchemy(app)

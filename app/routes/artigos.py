@@ -55,6 +55,11 @@ def criarArtigo():
         # Redireciona para a página do novo artigo
         return redirect("/artigo/"+newArtigo.id)
 
+    try:
+      user = session['user']
+    except:
+      return redirect("/login")
+
     # Se a requisição não for POST, exibe o formulário de criação de artigo
     return render_template("create-artigo.html")
 
@@ -99,6 +104,10 @@ def deslikePost(id):
 # Rota para visualizar um artigo por ID
 @artigos_bp.route("/artigo/<id>")
 def artigoPage(id):
+    try:
+      user = session['user']
+    except:
+      return redirect("/login")
     print(session['user'])
     artigo = Artigo.query.filter_by(id=id).first()
     autor = User.query.filter_by(id=artigo.autor).first()
@@ -138,7 +147,7 @@ def search_word_files(directory, search_terms):
               for run in paragraph.runs:
                   text = run.text
                   for term in search_terms:
-                      if term in text:
+                      if term.lower() in text.lower():
                           results.add(filename)  # Adicione o nome do arquivo ao conjunto
   
   return [{"file_name": filename} for filename in results]
