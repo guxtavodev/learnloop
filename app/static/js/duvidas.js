@@ -53,6 +53,13 @@ function addDuvida() {
               title: 'Dúvida publicada com sucesso!',
               icon: 'success',
             });
+
+            document.querySelector(".list-duvidas").innerHTML += `
+              <div>
+                <p onclick='getDuvida("${response.data.id}")'><strong>${result.value}</strong></p>
+                <button style='margin-top: 1em;' onclick='responderDuvida("${response.data.id}")'>Responder Dúvida</button>
+              </div>
+            `
           }
         });
     }
