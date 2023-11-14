@@ -9,9 +9,17 @@
     <input type="text" placeholder="Digite o título do artigo" name="title-art">
     <input type="text" placeholder="Digite a categoria do artigo" name="category">
     <input type="text" placeholder="Digite as tags do artigo" name="tags">
-    <textarea placeholder="Digite o conteúdo do artigo" name="conteudo-art"></textarea>
+    <textarea placeholder="Digite o conteúdo do artigo" name="conteudo-art" id="conteudo-art"></textarea>
 
     <button type="submit">Publicar Artigo</button>
+    
   </form>
+  
+  <button style="margin-top: 1em;" onclick="gerarArtigo()">Criar com Learn.Ai</button>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.1/axios.js" integrity="sha512-58Cj9pM2ndGHIIY58rq330v1/LuFmUBapU2f7LQjEy0WGTsCkVsF02MFcMsKP31lKwEWOEyygaj7vlXUOpJyUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{url_for('static', filename='js/create-artigo.js')}}"></script>
 {% endblock %}

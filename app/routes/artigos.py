@@ -232,3 +232,29 @@ def gerarAvaliacaoPorIa():
     "msg": "success",
     "response": assistant_response
   })
+
+@artigos_bp.route("/gerar-artigo-ai", methods=["POST"])
+def gerarArtigoPorIa():
+
+  data = request.get_json()
+  user_message = {"role": "user", "content": f"Conteúdo do usuário: {data['resumo']}"}
+
+  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+  conversation = [
+      {"role": "system", "content": "Você é um sistema AI que gera artigos com estilo informal e atrativo para jovens. Os usuários fornecem informações sobre tópicos que aprenderam na escola, e você cria artigos curtos, diretos e cheios de gírias populares para jovens, juntamente com emojis."},
+      user_message
+  ]
+
+  # Obtenha a resposta do GPT-3
+  response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
+      messages=conversation
+  )
+
+  # Obtenha a mensagem de resposta do assistente
+  assistant_response = response.choices[0].message["content"]
+  print(assistant_response)
+  return jsonify({
+    "msg": "success",
+    "response": assistant_response
+  })
