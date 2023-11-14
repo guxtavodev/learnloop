@@ -6,6 +6,8 @@ from passlib.hash import bcrypt_sha256
 from app import db
 import uuid
 
+
+
 # Rota para criar um novo usuário
 @users_bp.route("/cadastro")
 def cadastroPage():
@@ -34,6 +36,8 @@ def signup():
   db.session.add(newUser)
   db.session.commit()
   session["user"] = newUser.id 
+  session.permanent = True
+  
   return redirect("/")
 
 @users_bp.route("/api/login", methods=["GET"])
@@ -43,6 +47,7 @@ def login():
   user = User.query.filter_by(username=username).first()
   if user and bcrypt_sha256.verify(password, user.password):
     session["user"] = user.id
+    session.permanent = True
     return redirect("/")
   else:
     return "<h1>Usuário ou senha incorreto</h1>"
