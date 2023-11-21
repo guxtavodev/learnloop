@@ -6,7 +6,9 @@ from passlib.hash import bcrypt_sha256
 from app import db
 import uuid
 
-
+@users_bp.route("/guia")
+def guia():
+  return render_template("guia.html")
 
 # Rota para criar um novo usuário
 @users_bp.route("/cadastro")
