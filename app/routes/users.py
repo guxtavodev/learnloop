@@ -38,7 +38,7 @@ def signup():
   db.session.add(newUser)
   db.session.commit()
   session["user"] = newUser.id 
-  session.permanent = True
+
   
   return redirect("/")
 
@@ -49,7 +49,7 @@ def login():
   user = User.query.filter_by(username=username).first()
   if user and bcrypt_sha256.verify(password, user.password):
     session["user"] = user.id
-    session.permanent = True
+
     return redirect("/")
   else:
     return "<h1>Usuário ou senha incorreto</h1>"

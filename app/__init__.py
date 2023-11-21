@@ -1,12 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from datetime import timedelta
 
 # Crie as instâncias do Flask, SQLAlchemy e LoginManager
 app = Flask(__name__)
 
 from datetime import timedelta
 
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=78)
+app.permanent_session_lifetime = timedelta(hours=48)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data-learnloop.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '123'

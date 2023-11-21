@@ -11,10 +11,15 @@ from docx import Document
 import json
 import openai 
 
+
 openai.api_key = os.environ["OPENAI"]
 
 @artigos_bp.route("/")
 def homepage():
+  try:
+    user = session['user']
+  except:
+    return redirect('/login')
   return render_template("index.html")
 
 @artigos_bp.route("/avaliar-redacao")
