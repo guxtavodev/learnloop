@@ -21,6 +21,8 @@ function getDuvida(duvida) {
           text: infos['autor'],
           html: respostasHTML,
         });
+      } else {
+        window.location.href = '/login'
       }
     });
 }
@@ -60,6 +62,8 @@ function addDuvida() {
                 <button style='margin-top: 1em;' onclick='responderDuvida("${response.data.id}")'>Responder Dúvida</button>
               </div>
             `
+          } else {
+            window.location.href = '/login'
           }
         });
     }

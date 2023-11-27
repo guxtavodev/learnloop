@@ -9,7 +9,12 @@ import uuid
 def createDuvida():
   data = request.get_json()
   texto = data["texto"]
-  autor = session["user"]
+  try:
+    autor = session["user"]
+  except:
+    return jsonify({
+      'msg': 'error'
+    })
   id = str(uuid.uuid4())
 
   newDuvida = Duvidas(id=id, texto=texto, autor=autor)

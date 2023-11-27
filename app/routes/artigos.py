@@ -109,8 +109,8 @@ def artigoPage(id):
     try:
       user = session['user']
     except:
-      return redirect("/login")
-    print(session['user'])
+      user = 'visit'
+
     artigo = Artigo.query.filter_by(id=id).first()
     autor = User.query.filter_by(id=artigo.autor).first()
     if artigo:
