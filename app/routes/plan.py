@@ -13,6 +13,10 @@ openai.api_key = os.environ["OPENAI"]
 
 @iaplan_bp.route("/plan")
 def planPage():
+  try:
+    user = session['user']
+  except:
+    return redirect('/login')
   plano = LearnPlan.query.filter_by(autor=session["user"]).first()
   return render_template("plan.html", plano=plano)
 
