@@ -24,3 +24,17 @@ function gerarArtigo() {
     }
   });
 }
+
+function previewArtigo() {
+  var artigo = document.getElementById("conteudo-art").value 
+  // Crie um objeto Showdown
+  var converter = new showdown.Converter();
+
+  // Converta o Markdown para HTML
+  var htmlContent = converter.makeHtml(artigo);
+
+  Swal.fire({
+    title: 'Preview do artigo',
+    html: htmlContent
+  })
+}
