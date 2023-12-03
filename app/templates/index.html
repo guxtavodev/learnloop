@@ -32,6 +32,12 @@
 </div>
 
 <div class="container">
+<section>
+  <img src="{{url_for('static', filename='img/ads.png')}}">
+</section>
+</div>
+
+<div class="container">
   <h3>O que você quer fazer?</h3>
   <div class="mapa-btn">
     <button onclick="window.location.href='/feed/duvidas'">Fórum de Dúvidas</button>
@@ -40,4 +46,6 @@
     <button onclick="window.location.href = '/feed/projetos-feciba'">Projetos FECIBA</button>
   </div>
 </div>
+
+
 {% endblock %}

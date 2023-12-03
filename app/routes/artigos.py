@@ -260,7 +260,3 @@ def gerarArtigoPorIa():
     "msg": "success",
     "response": assistant_response
   })
-
-@artigos_bp.route('/static/<path:filename>')
-def serve_static(filename):
-    return send_from_directory('static', filename)
