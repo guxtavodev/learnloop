@@ -9,6 +9,8 @@
     flex-direction: column;
     gap: 1em;
   }
+
+  
 </style>
 {% endblock %}
 
@@ -17,10 +19,13 @@
   <h3>{{artigo.titulo}}</h3>
   <small>Criado por: {{autor.username}}</small>
 
+  <section>
+    <a href="https://instagram.com/learnloop.of">Coloque um anúncio aqui</a>
+  </section>
   <div id="conteudo">
     <p >{{artigo.texto | safe}}</p>
   </div>
-
+ 
   <div class="btns">
     <button onclick="window.location.href = '/add-like/{{artigo.id}}'">
       <span class="material-symbols-outlined">
@@ -30,6 +35,7 @@
 {% if session['user'] == artigo.autor %}
     <button onclick="deleteArtigo()" style="margin-top: 1em;">Deletar Artigo</button>
     {% endif %}
+    <button style="margin-top: 1em;" onclick="copiarToken('https://learnloop.site/artigo/{{artigo.id}}')">Copiar Link do artigo</button>
   </div>
 </div>
 
@@ -47,6 +53,25 @@
         }
       })
     }
+  }
+
+  function copiarToken(link) {
+    // Cria um elemento de texto temporário
+    let tempInput = document.createElement("input");
+    tempInput.value = link; // Define o valor do campo temporário como a string do link
+
+    // Adiciona o campo temporário ao documento
+    document.body.appendChild(tempInput);
+
+    // Seleciona e copia o valor do campo temporário
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+
+    // Remove o campo temporário
+    document.body.removeChild(tempInput);
+
+    alert("O link do artigo foi copiado");
   }
 </script>
 {% endblock %}
