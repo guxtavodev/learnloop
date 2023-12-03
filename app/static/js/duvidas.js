@@ -1,36 +1,70 @@
 // Função para obter informações sobre uma dúvida
 function getDuvida(duvida) {
   axios.get(`/get-duvida/${duvida}`)
-    .then((response) => {
+    .then(response => {
       if (response.data.msg === 'success') {
-        var infos = response.data.dados;
-        var respostasHTML = '';
-        console.log(infos)
-        console.log(response.data.respostas)
-
-        // Construir o HTML das respostas
-        response.data.respostas.forEach((res) => {
-          respostasHTML += `
-            <p><strong>${res['autor']}:</strong> ${res['texto']}</p>
-          `;
-        });
+        const infos = response.data.dados;
+        const respostasHTML = generateRespostasHTML(response.data.respostas);
 
         // Exibir informações e respostas em uma janela de diálogo
         Swal.fire({
-          title: infos['texto'],
-          text: infos['autor'],
+          title: infos.texto,
+          text: infos.autor,
           html: respostasHTML,
+          showCloseButton: true,  // Adiciona o botão de fechar
+          showCancelButton: true,
+          confirmButtonText: 'Deletar Dúvida',
+          cancelButtonText: 'Fechar',
+          showLoaderOnConfirm: true,
+          preConfirm: () => {
+            // Chama a função para deletar a dúvida
+            return deletarDuvida(duvida);
+          },
         });
       } else {
-        window.location.href = '/login'
+        window.location.href = '/login';
       }
+    })
+    .catch(error => {
+      console.error('Erro ao obter dúvida:', error);
     });
 }
+
+// Função para deletar uma dúvida
+function deletarDuvida(duvidaId) {
+  return axios.post('/deletar-duvida', { duvidaId })
+    .then(response => {
+      if (response.data.msg === 'success') {
+        Swal.fire({
+          title: 'Dúvida deletada com sucesso!',
+          icon: 'success',
+        });
+
+        // Adapte esta parte para remover a dúvida da interface
+        // Exemplo: document.getElementById('duvida-container').remove();
+      } else {
+        Swal.fire({
+          title: 'Erro ao deletar dúvida',
+          text: response.data.msg,
+          icon: 'error',
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Erro ao deletar dúvida:', error);
+      Swal.fire({
+        title: 'Erro ao deletar dúvida',
+        text: 'Ocorreu um erro ao tentar deletar a dúvida.',
+        icon: 'error',
+      });
+    });
+}
+
 
 // Função para adicionar uma nova dúvida
 function addDuvida() {
   Swal.fire({
-    title: 'Publicar Dúvida',
+    title: 'Publicar Dúvida (sua dúvida não será deletada)',
     html: `
       <input type='text' placeholder='Digite a sua dúvida' id='duvida'>
     `,

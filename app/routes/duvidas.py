@@ -79,4 +79,11 @@ def responderDuvida():
   return jsonify({
     'msg': 'success'
   })
-  
+
+@duvidas_bp.route("/deletar-duvida/<id>")
+def deletarDuvida(id):
+  duvida = Duvidas.query.filter_by(id=id).first()
+  db.session.delete(duvida)
+  db.session.commit()
+
+  return redirect("/feed/duvidas")

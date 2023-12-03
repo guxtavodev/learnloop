@@ -39,6 +39,9 @@
       <div>
         <p onclick='getDuvida("{{duvida.id}}")'><strong>{{duvida.texto}}</strong></p>
         <button style='margin-top: 1em;' onclick='responderDuvida("{{duvida.id}}")'>Responder Dúvida</button>
+        {% if session['user'] == duvida.autor %}
+          <button style="margin-top: 1em" onclick="window.location.href='/deletar-duvida/{{duvida.id}}'">Deletar Dúvida</button>
+        {% endif %}
       </div>
     {% endfor %}
 
