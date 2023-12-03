@@ -25,3 +25,8 @@ function gerarPlano() {
   });
 }
 
+Swal.fire({
+  title: 'Conheça o LearnPlan',
+  text: "Brother, saca só esse lugar maneiro onde tu manda ver no teu plano de estudos! Dá pra montar na mão mesmo, só digitando o que tu acha que precisa pra estudar um tópico específico. Ou, se quiser moleza, pede pro Learn.Ai criar o plano pra tu, só manda bem na hora de digitar teu objetivo com o plano de estudos. Facinho, né? Vai fundo! 🚀",
+  icon: 'icon'
+})

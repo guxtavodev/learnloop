@@ -1,5 +1,5 @@
 # Importação dos módulos e classes necessárias
-from flask import render_template, redirect, session, jsonify, request, url_for, make_response, send_file
+from flask import render_template, redirect, session, jsonify, request, url_for, make_response, send_file, send_from_directory
 from app.routes import artigos_bp
 from app.models import Artigo, User
 from app import db
@@ -260,3 +260,7 @@ def gerarArtigoPorIa():
     "msg": "success",
     "response": assistant_response
   })
+
+@artigos_bp.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('static', filename)

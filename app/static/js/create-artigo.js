@@ -1,8 +1,17 @@
+// Adiciona um ouvinte de evento para salvar o conteúdo antes de sair da página
+document.addEventListener('beforeunload', function() {
+  const resumo = document.getElementById('conteudo-art').value;
+  localStorage.setItem('conteudoArtigo', resumo);
+});
+
 function gerarArtigo() {
+  // Recuperar o conteúdo salvo (se existir)
+  const conteudoSalvo = localStorage.getItem('conteudoArtigo') || '';
+
   Swal.fire({
     title: 'Learn.Ai - Gerar Artigo a partir de Resumos',
     html: `
-      <textarea id="res" placeholder="Digite o resumo do que você entendeu em sala de aula"></textarea>
+      <textarea id="res" placeholder="Digite o resumo do que você entendeu em sala de aula">${conteudoSalvo}</textarea>
     `,
     showCancelButton: true,
     confirmButtonText: 'Gerar Artigo',
@@ -13,12 +22,11 @@ function gerarArtigo() {
       }
       return axios.post('/gerar-artigo-ai', { resumo })
         .then(response => {
-          // Aqui você pode lidar com a resposta da rota e preencher o input "texto" com a resposta.
           const respostaGPT3 = response.data.response;
           document.getElementById('conteudo-art').value = respostaGPT3;
+          localStorage.setItem('conteudoArtigo', resumo);
         })
         .catch(error => {
-          // Lidar com erros, exibir uma mensagem de erro, etc.
           Swal.fire('Erro ao gerar plano', error.message, 'error');
         });
     }
@@ -27,14 +35,11 @@ function gerarArtigo() {
 
 function previewArtigo() {
   var artigo = document.getElementById("conteudo-art").value 
-  // Crie um objeto Showdown
   var converter = new showdown.Converter();
-
-  // Converta o Markdown para HTML
   var htmlContent = converter.makeHtml(artigo);
 
   Swal.fire({
     title: 'Preview do artigo',
     html: htmlContent
-  })
+  });
 }

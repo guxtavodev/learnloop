@@ -13,3 +13,9 @@ function redacao() {
   }
 })
 }
+
+Swal.fire({
+  title: "Conheça o Treino de Redação",
+  text: "Mano, aqui é o local pra você mandar a sua redação e receber umas dicas maneiras do Learn.Ai, a inteligência artificial do LearnLoop! Isso é tipo o esquema perfeito pra estudar, né não? E relaxa, a sua redação não fica salva na nossa base de dados, tudo suave! Tamo junto na missão de melhorar esse textão pro ENEM, bora nessa? ✍️💡",
+  icon: 'info'
+})

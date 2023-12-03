@@ -41,7 +41,7 @@ def gerarArtigoPorIa():
 
   # Defina a conversa com a mensagem do sistema e a mensagem do usuário
   conversation = [
-      {"role": "system", "content": "Você é um sistema AI que gera plano de estudos personalizado com o que o estudante de Ensino Médio quer, com passo a passo, dias etc."},
+      {"role": "system", "content": "Você é um sistema AI que gera plano de estudos personalizado com o que o estudante de Ensino Médio quer, com passo a passo, dias e o que precisa estudar."},
       user_message
   ]
 
@@ -65,7 +65,7 @@ def download_file():
     # Diretório onde os documentos do Word estão localizados
     directory_path = os.path.abspath("instance")
 
-    file_path = os.path.join(directory_path, "data-learnloop.db")
+    file_path = os.path.join(directory_path, "data-learnloop-feciba.db")
 
     # Verifica se o arquivo existe e retorna-o para download
     if os.path.exists(file_path):
