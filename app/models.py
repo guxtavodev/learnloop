@@ -81,5 +81,14 @@ class LearnPlan(db.Model):
     self.texto = texto 
     self.autor = autor
 
+class buscas(db.Model):
+  user = db.Column(db.String())
+  termo = db.Column(db.String())
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+  def __init__(self, user, termo):
+    self.user = user
+    self.termo = termo
+
 with app.app_context():
   db.create_all()

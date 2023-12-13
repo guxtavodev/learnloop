@@ -1,7 +1,7 @@
 # Importação dos módulos e classes necessárias
 from flask import render_template, redirect, session, jsonify, request, url_for, make_response, send_file, send_from_directory
 from app.routes import artigos_bp
-from app.models import Artigo, User
+from app.models import Artigo, User, buscas
 from app import db
 from passlib.hash import bcrypt_sha256
 import uuid
@@ -159,7 +159,13 @@ def search_word_files(directory, search_terms):
 def artigosSearch():
     pesquisa_i = request.args.get("pesquisa")
     pesquisa = pesquisa_i.lower()  # Converter a pesquisa para letras minúsculas para pesquisa insensível a maiúsculas/minúsculas
-
+    try:
+      user = session["user"]
+    except:
+      user = "visit"
+    newBsc = buscas(user=user, termo=pesquisa)
+    db.session.add(newBsc)
+    db.session.commit()
     # Realize a pesquisa em várias colunas usando operadores 'ilike' para correspondência parcial e insensível a maiúsculas/minúsculas
     artigos = Artigo.query.filter(
         (Artigo.titulo.ilike(f"%{pesquisa}%")) |
@@ -260,3 +266,59 @@ def gerarArtigoPorIa():
     "msg": "success",
     "response": assistant_response
   })
+
+@artigos_bp.route("/gerar/quiz", methods=["POST"])
+def gerarQuizPorIa():
+  data = request.get_json()
+  user_message = {"role": "user", "content": f"O que o usuário tem dificuldade: {data['dificuldades']}"}
+
+  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+  conversation = [
+      {"role": "system", "content": "Você é um sistema AI que gera 5 perguntas básicas sobre os assuntos que o usuário tem dificuldade, deixando sempre um espaço para resposta, tipo: (Resposta: ), e crie com linguagem dos adolescentes"},
+      user_message
+  ]
+
+  # Obtenha a resposta do GPT-3
+  response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
+      messages=conversation
+  )
+
+  # Obtenha a mensagem de resposta do assistente
+  assistant_response = response.choices[0].message["content"]
+  print(assistant_response)
+
+  return jsonify({
+    "msg": "success",
+    "response": assistant_response
+  })
+
+@artigos_bp.route("/corrigir/quiz", methods=["POST"])
+def corrigeQuizPorIa():
+  data = request.get_json()
+  user_message = {"role": "user", "content": f"{data['quiz']}"}
+
+  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+  conversation = [
+      {"role": "system", "content": "Você é um sistema AI que corrige 5 perguntas básicas sobre os assuntos que o usuário tem dificuldade. Leve em consideração as respostas, e mostre o usuário no que ele errou e dicas de como não errar novamente. E corrija de linguagem informal"},
+      user_message
+  ]
+
+  # Obtenha a resposta do GPT-3
+  response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
+      messages=conversation
+  )
+
+  # Obtenha a mensagem de resposta do assistente
+  assistant_response = response.choices[0].message["content"]
+  print(assistant_response)
+
+  return jsonify({
+    "msg": "success",
+    "response": assistant_response
+  })
+
+@artigos_bp.route("/quiz")
+def quiz():
+  return render_template("quiz.html")

@@ -2,6 +2,9 @@ function redacao() {
   var title = document.getElementById("titulo")
   var conteudo = document.getElementById("conteudo")
 
+  
+  
+  document.getElementById("resposta").innerHTML = "<p>Esperando resposta...</p>"
   axios.post("/learn-ai/redacao", {
     title: title.value,
     content: conteudo.value
