@@ -8,7 +8,7 @@ app = Flask(__name__)
 from datetime import timedelta
 
 app.permanent_session_lifetime = timedelta(hours=48)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data-learnloop-fecibo.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '123'
 
