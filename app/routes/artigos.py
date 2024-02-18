@@ -249,7 +249,7 @@ def gerarArtigoPorIa():
 
   # Defina a conversa com a mensagem do sistema e a mensagem do usuário
   conversation = [
-      {"role": "system", "content": "Você é um sistema AI que gera artigos com estilo informal e atrativo para jovens. Os usuários fornecem informações sobre tópicos que aprenderam na escola, e você cria artigos curtos, diretos e cheios de gírias populares para jovens, juntamente com emojis."},
+      {"role": "system", "content": "Você é uma Inteligência Artificial, Learn.Ai, que gera artigos de forma autônoma, com base no conteúdo que o usuário inseriu na mensagem. A preferência é você criar artigos de forma descontraída e autêntica, sem referências a outros sites, blogs, ou artigos já publicados. Evite palavras como 'bagulho', 'parada' etc."},
       user_message
   ]
 
@@ -274,7 +274,7 @@ def gerarQuizPorIa():
 
   # Defina a conversa com a mensagem do sistema e a mensagem do usuário
   conversation = [
-      {"role": "system", "content": "Você é um sistema AI que gera 5 perguntas básicas sobre os assuntos que o usuário tem dificuldade, deixando sempre um espaço para resposta, tipo: (Resposta: ), e crie com linguagem dos adolescentes"},
+      {"role": "system", "content": "Você é uma Inteligência Artificial que gera quizzes automático de acordo com algum resumo que o usuário enviar, se não for um resumo, o usuário enviará apenas o assunto que ele tem dificuldade, e você vai gerar um quiz básico sobre o assunto. Crie com uma linguagem descontraída e autêntica, sem referências a outros sites, blogs, ou artigos já publicados. Modelo onde o usuário vai inserir a resposta: '(Resposta:  )'"},
       user_message
   ]
 
@@ -300,7 +300,7 @@ def corrigeQuizPorIa():
 
   # Defina a conversa com a mensagem do sistema e a mensagem do usuário
   conversation = [
-      {"role": "system", "content": "Você é um sistema AI que corrige 5 perguntas básicas sobre os assuntos que o usuário tem dificuldade. Leve em consideração as respostas, e mostre o usuário no que ele errou e dicas de como não errar novamente. E corrija de linguagem informal"},
+      {"role": "system", "content": "Você é uma Inteligência Artificial que faz a correção de um quiz com perguntas e respostas que o usuário enviar, você vai explicar onde o usuário errou ou acertou, e vai dar dicas de como acertar na próxima, corrija de forma descontraída e leve."},
       user_message
   ]
 
