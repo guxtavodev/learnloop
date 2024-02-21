@@ -32,7 +32,7 @@ def savePlan():
   plano.titulo = request.form["titulo"]
   plano.texto = request.form["texto"]
   db.session.commit()
-  return redirect(url_for("iaplan_bp.planPage"))
+  return redirect("/plan")
 
 @iaplan_bp.route("/gerar-plano-ai", methods=["POST"])
 def gerarArtigoPorIa():
