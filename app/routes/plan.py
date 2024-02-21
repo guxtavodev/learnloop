@@ -41,7 +41,7 @@ def gerarArtigoPorIa():
 
   # Defina a conversa com a mensagem do sistema e a mensagem do usuário
   conversation = [
-      {"role": "system", "content": "Você é um sistema AI que gera plano de estudos personalizado com o que o estudante de Ensino Médio quer, com passo a passo, dias e o que precisa estudar."},
+      {"role": "system", "content": "Você é um sistema AI que gera plano de estudos personalizado com o que o estudante de Ensino Médio quer, com passo a passo, dias e o que precisa estudar. Não crie em Markdown."},
       user_message
   ]
 
