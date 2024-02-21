@@ -1,4 +1,15 @@
 // Função para obter informações sobre uma dúvida
+
+function generateRespostasHTML(respostas) {
+  let html = '<ul>';
+  respostas.forEach(resposta => {
+    html += `<li><strong>${resposta.autor}:</strong> ${resposta.texto}</li>`; // Ajuste aqui para acessar a propriedade correta do objeto resposta
+  });
+  html += '</ul>';
+  return html;
+}
+
+
 function getDuvida(duvida) {
   axios.get(`/get-duvida/${duvida}`)
     .then(response => {

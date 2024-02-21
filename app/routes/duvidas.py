@@ -57,7 +57,7 @@ def getDuvida(id):
 
     serialized_respostas = [serialize_resposta(resposta) for resposta in respostas]
     serialized_duvida = serialize_duvida(duvida) if duvida else None
-
+    print(serialized_respostas)
     return jsonify({
         "msg": "success",
         "dados": serialized_duvida,
@@ -75,7 +75,7 @@ def responderDuvida():
   newReposta = Respostas(id=str(uuid.uuid4()), texto=texto, autor=autor, referencia=duvida)
   db.session.add(newReposta)
   db.session.commit()
-
+  print(texto)
   return jsonify({
     'msg': 'success'
   })
