@@ -246,7 +246,7 @@ def gerarAvaliacaoPorIa():
 def gerarArtigoPorIa():
   origem = request.headers.get('Origin')
   print(origem)
-  if origem != "http://learnloop.site":
+  if origem != "https://learnloop.site":
     return jsonify({
       "msg": "nao autorizado."
     })
