@@ -244,14 +244,7 @@ def gerarAvaliacaoPorIa():
 
 @artigos_bp.route("/api/gerar-artigo-ai", methods=["POST"])
 def gerarArtigoPorIa():
-  origem = request.headers.get('Origin')
-  print(origem)
-  if origem != "https://learnloop.site":
-    return jsonify({
-      "msg": "nao autorizado."
-    })
-  print(f"Domínio de origem: {origem}")
-  print(request)
+
   data = request.get_json()
   user_message = {"role": "user", "content": f"Conteúdo do usuário: {data['resumo']}"}
 
