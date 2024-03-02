@@ -17,12 +17,6 @@ openai.api_key = os.environ["OPENAI"]
 
 @artigos_bp.route("/")
 def homepage():
-  origem = request.headers.get('Origin')
-  if origem is None:
-      origem = request.headers.get('Referer')
-  if origem != 'https://learnloop.site/static/sw.js':
-    return "esqueca"
-  print(f"Domínio de origem: {origem}")
   return render_template("index.html")
 
 @artigos_bp.route("/avaliar-redacao")
@@ -223,6 +217,7 @@ def feed_artigos():
 
 @artigos_bp.route("/learn-ai/redacao", methods=["POST"])
 def gerarAvaliacaoPorIa():
+  
   data = request.get_json()
   user_message = {"role": "user", "content": f"Título: {data['title']} \n Redação: {data['content']}"}
 
@@ -249,6 +244,12 @@ def gerarAvaliacaoPorIa():
 
 @artigos_bp.route("/api/gerar-artigo-ai", methods=["POST"])
 def gerarArtigoPorIa():
+  origem = request.headers.get('Origin')
+  if origem is None:
+      origem = request.headers.get('Referer')
+  if origem != 'https://learnloop.site/create-artigo':
+    return "esqueca"
+  print(f"Domínio de origem: {origem}")
   print(request)
   data = request.get_json()
   user_message = {"role": "user", "content": f"Conteúdo do usuário: {data['resumo']}"}
