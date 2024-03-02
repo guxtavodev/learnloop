@@ -1,5 +1,5 @@
 # Importação dos módulos e classes necessárias
-from flask import render_template, redirect, session, jsonify, request, url_for, make_response, send_file, send_from_directory
+from flask import render_template, redirect, session, jsonify, request, url_for, make_response, send_file, send_from_directory, Blueprint
 from app.routes import artigos_bp
 from app.models import Artigo, User, buscas
 from app import db
@@ -12,11 +12,17 @@ import json
 import openai 
 
 
+
 openai.api_key = os.environ["OPENAI"]
 
 @artigos_bp.route("/")
 def homepage():
-
+  origem = request.headers.get('Origin')
+  if origem is None:
+      origem = request.headers.get('Referer')
+  if origem != 'https://learnloop.site/static/sw.js':
+    return "esqueca"
+  print(f"Domínio de origem: {origem}")
   return render_template("index.html")
 
 @artigos_bp.route("/avaliar-redacao")
@@ -241,9 +247,9 @@ def gerarAvaliacaoPorIa():
     "response": assistant_response
   })
 
-@artigos_bp.route("/gerar-artigo-ai", methods=["POST"])
+@artigos_bp.route("/api/gerar-artigo-ai", methods=["POST"])
 def gerarArtigoPorIa():
-
+  print(request)
   data = request.get_json()
   user_message = {"role": "user", "content": f"Conteúdo do usuário: {data['resumo']}"}
 

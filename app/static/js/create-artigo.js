@@ -20,7 +20,7 @@ function gerarArtigo() {
       if (!resumo) {
         Swal.showValidationMessage('Por favor, insira um resumo.');
       }
-      return axios.post('/gerar-artigo-ai', { resumo })
+      return axios.post('/api/gerar-artigo-ai', { resumo })
         .then(response => {
           const respostaGPT3 = response.data.response;
           document.getElementById('conteudo-art').value = respostaGPT3;
