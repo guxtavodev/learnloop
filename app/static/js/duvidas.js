@@ -9,7 +9,6 @@ function generateRespostasHTML(respostas) {
   return html;
 }
 
-
 function getDuvida(duvida) {
   axios.get(`/get-duvida/${duvida}`)
     .then(response => {
