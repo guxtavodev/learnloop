@@ -36,6 +36,6 @@ document.querySelector("#area").value = "Calma aí..."
 
 Swal.fire({
   title: 'Conheça o LearnQuiz',
-  text: "E aí, bro, aqui é onde tu manda ver no que aprendeu. Digita os rolês que tu quer treinar, aí vai pipocar umas perguntas quando tu clicar em 'criar quiz com Learn.Ai'. Depois, responde tudo e manda bala clicando em 'enviar respostas' pra ver se tá certinho",
+  text: "Olá! Seja bem vindo(a) ao LearnQuiz! O recurso inédito do LearnLoop! Aqui você digita a anotação/resumo de um assunto que você quer treinar, clicar em 'criar quiz com Learn.Ai', ele vai gerar 5 perguntas básicas para você treinar, após você responder todas as perguntas, clica em 'Enviar Respostas', para ele corrigir automaticamente as questões, e com dicas de como não errar novamente na hora da prova/simulado etc. Bem legal, né? Se tiver dúvidas, pode ir no Direct no Instagram @learnloop.of",
   icon: 'icon'
 })

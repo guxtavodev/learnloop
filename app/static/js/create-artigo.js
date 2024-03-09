@@ -43,3 +43,9 @@ function previewArtigo() {
     html: htmlContent
   });
 }
+
+Swal.fire({
+  title: 'Conheça o Criador de Artigo',
+  text: "Olá, seja bem vindo ao criador de artigo do LearnLoop! Aqui, você cria artigos que pode servir para você mesmo, futuramente, e de bônus ainda ajuda outros estudantes, você pode ir em 'Criar com Learn.Ai', digita algum resumo ou anotação do quadro ou do caderno, e o Learn.Ai vai gerar um artigo bem descontraído, leve e compreensível, ajudando você de fato, aprender algum novo assunto.",
+  icon: 'icon'
+})

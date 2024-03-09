@@ -3,7 +3,7 @@
 function generateRespostasHTML(respostas) {
   let html = '<ul>';
   respostas.forEach(resposta => {
-    html += `<li><strong>${resposta.autor}:</strong> ${resposta.texto}</li>`; // Ajuste aqui para acessar a propriedade correta do objeto resposta
+    html += `<li><strong>${resposta.autor}:</strong> ${resposta.texto}</li>`; 
   });
   html += '</ul>';
   return html;
