@@ -1,14 +1,14 @@
+<!DOCTYPE html>
 <html>
   <head>
     <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "jhgb83crkv");
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "jhgb83crkv");
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2345353716426198"
-       crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2345353716426198" crossorigin="anonymous"></script>
    
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
@@ -36,65 +36,54 @@
       <h1>LearnLoop</h1>
       <nav>
         <a href="/">
-          <span class="material-symbols-outlined">
-          home
-          </span>
+          <span class="material-symbols-outlined">home</span>
         </a>
- 
-        <a href="/feed/projetos-feciba">
-          <span class="material-symbols-outlined">
-          description
-          </span>
+        <a href="/create-artigo">
+          <span class="material-symbols-outlined">add_circle</span>
         </a>
         <a href="/feed/artigos">
-          <span class="material-symbols-outlined">
-          feed
-          </span>
+          <span class="material-symbols-outlined">list</span>
         </a>
-        <a onclick="excluirConta()">
-          <span class="material-symbols-outlined">
-          person_remove
-          </span>
-        </a>
-        <a href="/api/logout">
-          <span class="material-symbols-outlined">
-          logout
-          </span>
-        </a>
-        
+        {% if session['user'] %}
+          <a onclick="excluirConta()">
+            <span class="material-symbols-outlined">person_remove</span>
+          </a>
+          <a href="/api/logout">
+            <span class="material-symbols-outlined">logout</span>
+          </a>
+        {% else %}
+          <a href="/login">
+            <span class="material-symbols-outlined">login</span>
+          </a>
+        {% endif %}
       </nav>
       <form action="/search/artigos" method="GET" style="display: flex; flex-direction: row; margin-top: 1em;">
         <input style="padding: 4px;" type="text" name="pesquisa" placeholder="Digite sua pesquisa" required>
         <button>
-          <span class="material-symbols-outlined">
-          search
-          </span>
+          <span class="material-symbols-outlined">search</span>
         </button>
       </form>
     </header>
     <body>
     {% block content %}
 
-      {% endblock %}
-      <script>
-          if ('serviceWorker' in navigator) {
-              window.addEventListener('load', function() {
-                  navigator.serviceWorker.register("{{ url_for('static', filename='sw.js') }}")
-                      .then(function(registration) {
-                          console.log('Service Worker registrado com sucesso:', registration);
-                      })
-                      .catch(function(error) {
-                          console.log('Erro ao registrar o Service Worker:', error);
-                      });
-              });
-          }
-      </script>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      <script src="{{url_for('static', filename='js/duvidas.js')}}">
-   
-      </script>
+    {% endblock %}
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register("{{ url_for('static', filename='sw.js') }}")
+            .then(function(registration) {
+              console.log('Service Worker registrado com sucesso:', registration);
+            })
+            .catch(function(error) {
+              console.log('Erro ao registrar o Service Worker:', error);
+            });
+        });
+      }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{url_for('static', filename='js/duvidas.js')}}"></script>
   </body>
 </html>
