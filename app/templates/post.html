@@ -9,8 +9,6 @@
     flex-direction: column;
     gap: 1em;
   }
-
-  
 </style>
 {% endblock %}
 
@@ -23,55 +21,80 @@
     <img src="{{url_for('static', filename='img/ads.png')}}">
   </section>
   <div id="conteudo">
-    <p >{{artigo.texto | safe}}</p>
+    <p>{{artigo.texto | safe}}</p>
   </div>
- 
+
   <div class="btns">
     <button onclick="window.location.href = '/add-like/{{artigo.id}}'">
-      <span class="material-symbols-outlined">
-      thumb_up
-      </span> ({{artigo.likes}})
+      <span class="material-symbols-outlined">thumb_up</span> ({{artigo.likes}})
     </button>
-{% if session['user'] == artigo.autor %}
+
+    <button style='margin-top: 1em;' onclick="tiraDuvida()">
+      Tirar Dúvida
+    </button>
+    {% if session['user'] == artigo.autor %}
     <button onclick="deleteArtigo()" style="margin-top: 1em;">Deletar Artigo</button>
     {% endif %}
     <button style="margin-top: 1em;" onclick="copiarToken('https://learnloop.site/artigo/{{artigo.id}}')">Copiar Link do artigo</button>
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
 <script>
-  function deleteArtigo() {
-    var senha = prompt("Digite a senha para deletar o artigo:");
-    if(senha === false) {
-      return;
-    } else {
-      axios.get("/delete-artigo/{{artigo.id}}?senha="+senha).then((r) => {
-        if(r.data.msg === "success") {
-          window.location.href='/'
-        }
+function tiraDuvida() {
+  Swal.fire({
+    title: 'Tirar Dúvida do artigo',
+    html: '<input type="text" id="duvida" placeholder="Digite sua dúvida do artigo">',
+    focusConfirm: false,
+    preConfirm: () => {
+      const duvida = document.getElementById('duvida').value;
+      return axios.post('/api/tirar-duvida-artigo', {
+        duvida: duvida,
+        conteudo_artigo: '{{artigo.texto}}'
       })
+      .then(response => {
+        Swal.fire({
+          title: 'Resposta',
+          text: response.data.resposta,
+          icon: 'success'
+        });
+      })
+      .catch(error => {
+        Swal.fire({
+          title: 'Erro',
+          text: 'Ocorreu um erro ao processar sua solicitação.',
+          icon: 'error'
+        });
+      });
     }
+  });
+}
+
+function deleteArtigo() {
+  var senha = prompt("Digite a senha para deletar o artigo:");
+  if (senha === false) {
+    return;
+  } else {
+    axios.get("/delete-artigo/{{artigo.id}}?senha="+senha).then((r) => {
+      if (r.data.msg === "success") {
+        window.location.href='/'
+      }
+    });
   }
+}
 
-  function copiarToken(link) {
-    // Cria um elemento de texto temporário
-    let tempInput = document.createElement("input");
-    tempInput.value = link; // Define o valor do campo temporário como a string do link
-
-    // Adiciona o campo temporário ao documento
-    document.body.appendChild(tempInput);
-
-    // Seleciona e copia o valor do campo temporário
-    tempInput.select();
-    tempInput.setSelectionRange(0, 99999);
-    document.execCommand("copy");
-
-    // Remove o campo temporário
-    document.body.removeChild(tempInput);
-
-    alert("O link do artigo foi copiado");
-  }
+function copiarToken(link) {
+  let tempInput = document.createElement("input");
+  tempInput.value = link;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  tempInput.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(tempInput);
+  alert("O link do artigo foi copiado");
+}
 </script>
 {% endblock %}

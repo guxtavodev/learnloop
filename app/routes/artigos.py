@@ -250,7 +250,7 @@ def gerarArtigoPorIa():
 
   # Defina a conversa com a mensagem do sistema e a mensagem do usuário
   conversation = [
-      {"role": "system", "content": "Você é uma Inteligência Artificial, Learn.Ai, que gera artigos de forma autônoma, com base no conteúdo que o usuário inseriu na mensagem. A preferência é você criar artigos de forma descontraída e autêntica, sem referências a outros sites, blogs, ou artigos já publicados. Evite palavras como 'bagulho', 'parada' etc. Se o conteúdo for muito superficial, pode adicionar mais informações que possa ajudar o usuário no Ensino Médio"},
+      {"role": "system", "content": "Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base nas entradas dos usuários. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos."},
       user_message
   ]
 
@@ -323,3 +323,28 @@ def corrigeQuizPorIa():
 @artigos_bp.route("/quiz")
 def quiz():
   return render_template("quiz.html")
+
+@artigos_bp.route('/api/tirar-duvida-artigo', methods=["POST"])
+def tiraDuvidaArtigo():
+  data = request.get_json()
+  user_message = {"role": "user", "content": f"Artigo: {data['conteudo_artigo']}. Dúvida: {data['duvida']}"}
+
+  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+  conversation = [
+      {"role": "system", "content": "Você é uma Inteligência Artificial, que tira dúvida de um artigo, você pode pegar a base do artigo, ou, pegar outras referências. O importante é o usuário entender de vez o assunto. Responda de forma descontraída. E não deixe o usuário fugir muito do artigo."},
+      user_message
+  ]
+
+  # Obtenha a resposta do GPT-3
+  response = openai.ChatCompletion.create(
+      model="gpt-3.5-turbo",
+      messages=conversation
+  )
+
+  # Obtenha a mensagem de resposta do assistente
+  assistant_response = response.choices[0].message["content"]
+  print(assistant_response)
+  return jsonify({
+    "msg": "success",
+    "resposta": assistant_response
+  })
