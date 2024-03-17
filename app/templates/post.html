@@ -53,7 +53,7 @@ function tiraDuvida() {
       const duvida = document.getElementById('duvida').value;
       return axios.post('/api/tirar-duvida-artigo', {
         duvida: duvida,
-        conteudo_artigo: '{{artigo.texto}}'
+        conteudo_artigo: `{{artigo.texto}}`
       })
       .then(response => {
         Swal.fire({
