@@ -223,7 +223,7 @@ def gerarAvaliacaoPorIa():
 
   # Defina a conversa com a mensagem do sistema e a mensagem do usuário
   conversation = [
-      {"role": "system", "content": "Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM"},
+      {"role": "system", "content": "Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua pontuação"},
       user_message
   ]
 
@@ -250,7 +250,7 @@ def gerarArtigoPorIa():
 
   # Defina a conversa com a mensagem do sistema e a mensagem do usuário
   conversation = [
-      {"role": "system", "content": "Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base nas entradas dos usuários. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos."},
+      {"role": "system", "content": "Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos."},
       user_message
   ]
 
