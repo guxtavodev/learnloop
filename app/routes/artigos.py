@@ -217,108 +217,135 @@ def feed_artigos():
 
 @artigos_bp.route("/learn-ai/redacao", methods=["POST"])
 def gerarAvaliacaoPorIa():
-  
-  data = request.get_json()
-  user_message = {"role": "user", "content": f"Título: {data['title']} \n Redação: {data['content']}"}
-
-  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
-  conversation = [
-      {"role": "system", "content": "Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua pontuação"},
-      user_message
-  ]
-
-  # Obtenha a resposta do GPT-3
-  response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
-      messages=conversation
-  )
-
-  # Obtenha a mensagem de resposta do assistente
-  assistant_response = response.choices[0].message["content"]
-  print(assistant_response)
-
-  return jsonify({
-    "msg": "success",
-    "response": assistant_response
-  })
+  try:
+    user = session['user']
+    userDb = User.query.filter_by(id=user).first()
+    if userDb:
+      data = request.get_json()
+      user_message = {"role": "user", "content": f"Título: {data['title']} \n Redação: {data['content']}"}
+    
+      # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+      conversation = [
+          {"role": "system", "content": "Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua pontuação"},
+          user_message
+      ]
+    
+      # Obtenha a resposta do GPT-3
+      response = openai.ChatCompletion.create(
+          model="gpt-3.5-turbo",
+          messages=conversation
+      )
+    
+      # Obtenha a mensagem de resposta do assistente
+      assistant_response = response.choices[0].message["content"]
+      print(assistant_response)
+    
+      return jsonify({
+        "msg": "success",
+        "response": assistant_response
+      })
+  except KeyError:
+    return redirect('/login')
 
 @artigos_bp.route("/api/gerar-artigo-ai", methods=["POST"])
 def gerarArtigoPorIa():
-
-  data = request.get_json()
-  user_message = {"role": "user", "content": f"Conteúdo do usuário: {data['resumo']}"}
-
-  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
-  conversation = [
-      {"role": "system", "content": "Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos."},
-      user_message
-  ]
-
-  # Obtenha a resposta do GPT-3
-  response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
-      messages=conversation
-  )
-
-  # Obtenha a mensagem de resposta do assistente
-  assistant_response = response.choices[0].message["content"]
-  print(assistant_response)
-  return jsonify({
-    "msg": "success",
-    "response": assistant_response
-  })
+  try:
+    user = session['user']
+    userDb = User.query.filter_by(id=user).first()
+    if userDb:
+      data = request.get_json()
+      user_message = {"role": "user", "content": f"Conteúdo do usuário: {data['resumo']}"}
+    
+      # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+      conversation = [
+          {"role": "system", "content": "Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos."},
+          user_message
+      ]
+    
+      # Obtenha a resposta do GPT-3
+      response = openai.ChatCompletion.create(
+          model="gpt-3.5-turbo",
+          messages=conversation
+      )
+    
+      # Obtenha a mensagem de resposta do assistente
+      assistant_response = response.choices[0].message["content"]
+      print(assistant_response)
+      return jsonify({
+        "msg": "success",
+        "response": assistant_response
+      })
+  except:
+    return redirect('/login')
 
 @artigos_bp.route("/gerar/quiz", methods=["POST"])
 def gerarQuizPorIa():
-  data = request.get_json()
-  user_message = {"role": "user", "content": f"O que o usuário tem dificuldade: {data['dificuldades']}"}
+    try:
+        user = session.get('user')
+        if user is None:
+            return jsonify({"msg": "error", "error": "Usuário não autenticado"}), 401
 
-  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
-  conversation = [
-      {"role": "system", "content": "Você é uma Inteligência Artificial que gera quizzes automático de acordo com algum resumo que o usuário enviar, se não for um resumo, o usuário enviará apenas o assunto que ele tem dificuldade, e você vai gerar um quiz básico sobre o assunto. Crie com uma linguagem descontraída e autêntica, sem referências a outros sites, blogs, ou artigos já publicados. Modelo onde o usuário vai inserir a resposta: '(Resposta:  )' deixe sempre o campo de resposta vazio, você não vai responder nada."},
-      user_message
-  ]
+        userDb = User.query.filter_by(id=user).first()
+        if userDb is None:
+            return jsonify({"msg": "error", "error": "Usuário não encontrado"}), 404
 
-  # Obtenha a resposta do GPT-3
-  response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
-      messages=conversation
-  )
+        data = request.get_json()
+        user_message = {"role": "user", "content": f"O que o usuário tem dificuldade: {data['dificuldades']}"}
 
-  # Obtenha a mensagem de resposta do assistente
-  assistant_response = response.choices[0].message["content"]
-  print(assistant_response)
+        # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+        conversation = [
+            {"role": "system", "content": "Você é uma Inteligência Artificial que gera quizzes automático de acordo com algum resumo que o usuário enviar, se não for um resumo, o usuário enviará apenas o assunto que ele tem dificuldade, e você vai gerar um quiz básico sobre o assunto. Crie com uma linguagem descontraída e autêntica, sem referências a outros sites, blogs, ou artigos já publicados. Modelo onde o usuário vai inserir a resposta: '(Resposta:  )' deixe sempre o campo de resposta vazio, você não vai responder nada."},
+            user_message
+        ]
 
-  return jsonify({
-    "msg": "success",
-    "response": assistant_response
-  })
+        # Obtenha a resposta do GPT-3
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=conversation
+        )
+
+        # Obtenha a mensagem de resposta do assistente
+        assistant_response = response.choices[0].message["content"]
+        print(assistant_response)
+
+        return jsonify({
+            "msg": "success",
+            "response": assistant_response
+        })
+    except KeyError:
+        return redirect('/login')
 
 @artigos_bp.route("/corrigir/quiz", methods=["POST"])
 def corrigeQuizPorIa():
-  data = request.get_json()
-  user_message = {"role": "user", "content": f"{data['quiz']}"}
-
-  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
-  conversation = [
-      {"role": "system", "content": "Você é uma Inteligência Artificial que faz a correção de um quiz com perguntas e respostas que o usuário enviar, você vai explicar onde o usuário errou ou acertou, e vai dar dicas de como acertar na próxima, corrija de forma descontraída e leve."},
-      user_message
-  ]
-
-  # Obtenha a resposta do GPT-3
-  response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
-      messages=conversation
-  )
-
-  # Obtenha a mensagem de resposta do assistente
-  assistant_response = response.choices[0].message["content"]
-  print(assistant_response)
-
-  return jsonify({
-    "msg": "success",
-    "response": assistant_response
-  })
+  try:
+    user = session['user']
+    userDb = User.query.filter_by(id=user).first()
+    if userDb:
+      data = request.get_json()
+      user_message = {"role": "user", "content": f"{data['quiz']}"}
+    
+      # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+      conversation = [
+          {"role": "system", "content": "Você é uma Inteligência Artificial que faz a correção de um quiz com perguntas e respostas que o usuário enviar, você vai explicar onde o usuário errou ou acertou, e vai dar dicas de como acertar na próxima, corrija de forma descontraída e leve."},
+          user_message
+      ]
+    
+      # Obtenha a resposta do GPT-3
+      response = openai.ChatCompletion.create(
+          model="gpt-3.5-turbo",
+          messages=conversation
+      )
+    
+      # Obtenha a mensagem de resposta do assistente
+      assistant_response = response.choices[0].message["content"]
+      print(assistant_response)
+    
+      return jsonify({
+        "msg": "success",
+        "response": assistant_response
+      })
+  except KeyError:
+    return redirect('/login')
 
 @artigos_bp.route("/quiz")
 def quiz():
@@ -326,25 +353,31 @@ def quiz():
 
 @artigos_bp.route('/api/tirar-duvida-artigo', methods=["POST"])
 def tiraDuvidaArtigo():
-  data = request.get_json()
-  user_message = {"role": "user", "content": f"Artigo: {data['conteudo_artigo']}. Dúvida: {data['duvida']}"}
-
-  # Defina a conversa com a mensagem do sistema e a mensagem do usuário
-  conversation = [
-      {"role": "system", "content": "Você é uma Inteligência Artificial, que tira dúvida de um artigo, você pode pegar a base do artigo, ou, pegar outras referências. O importante é o usuário entender de vez o assunto. Responda de forma descontraída. E não deixe o usuário fugir muito do artigo."},
-      user_message
-  ]
-
-  # Obtenha a resposta do GPT-3
-  response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
-      messages=conversation
-  )
-
-  # Obtenha a mensagem de resposta do assistente
-  assistant_response = response.choices[0].message["content"]
-  print(assistant_response)
-  return jsonify({
-    "msg": "success",
-    "resposta": assistant_response
-  })
+  try:
+    user = session['user']
+    userDb = User.query.filter_by(id=user).first()
+    if userDb:
+      data = request.get_json()
+      user_message = {"role": "user", "content": f"Artigo: {data['conteudo_artigo']}. Dúvida: {data['duvida']}"}
+    
+      # Defina a conversa com a mensagem do sistema e a mensagem do usuário
+      conversation = [
+          {"role": "system", "content": "Você é uma Inteligência Artificial, que tira dúvida de um artigo, você pode pegar a base do artigo, ou, pegar outras referências. O importante é o usuário entender de vez o assunto. Responda de forma descontraída. E não deixe o usuário fugir muito do artigo."},
+          user_message
+      ]
+    
+      # Obtenha a resposta do GPT-3
+      response = openai.ChatCompletion.create(
+          model="gpt-3.5-turbo",
+          messages=conversation
+      )
+    
+      # Obtenha a mensagem de resposta do assistente
+      assistant_response = response.choices[0].message["content"]
+      print(assistant_response)
+      return jsonify({
+        "msg": "success",
+        "resposta": assistant_response
+      })
+  except KeyError:
+    return redirect('/login')
