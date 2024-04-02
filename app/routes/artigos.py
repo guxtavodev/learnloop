@@ -87,6 +87,14 @@ def deleteArtigo(id):
     else:
         return "Artigo Não Existe"
 
+@artigos_bp.route("/delete-artigo/<id>/admin", methods=["GET"])
+def deleteArtigoAdm(id):
+    artigo = Artigo.query.filter_by(id=id).first()
+
+    db.session.delete(artigo)
+    db.session.commit()
+    return 'ok'
+
 # Rota para adicionar um 'like' a um artigo
 @artigos_bp.route("/add-like/<id>")
 def likePost(id):
