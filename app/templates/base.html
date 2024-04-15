@@ -9,29 +9,30 @@
       })(window, document, "clarity", "script", "jhgb83crkv");
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2345353716426198" crossorigin="anonymous"></script>
-   
-    <title>{% block title %}{% endblock %}</title>
+   <title>{% block title %}{% endblock %}</title>
+  
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="{{url_for('static', filename='css/base.css')}}">
     <link rel="icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/png">
     <link rel="manifest" href="{{url_for('static', filename='manifest.json')}}">
-    <meta name="description" content="Se junte na maior plataforma de estudos do Brasil, impulsionado com Inteligência Artificial! Feito por estudante para estudantes! Junte-se a revolução educacional!">
-    <meta name="keywords" content="plataforma de estudos, site para estudos, inteligência artificial para estudos, plataforma educacional online, aprendizado online">
+    {% block metas %}
+
+    {% endblock %}
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="7 days">
     <meta name="language" content="Portuguese">
-    <meta name="robots" content="noodp">
     <meta name="rating" content="general">
     <meta name="distribution" content="global">
     <meta name="googlebot" content="index, follow">
-    <meta name="author" content="Gustavo.">
+    <meta name="author" content="Gustavo">
+
 
     {% block styled %}
     {% endblock %}
   </head>
-  <body>
+  <body class='dark-mode'>
     <header>
       <h1>LearnLoop</h1>
       <nav>
@@ -45,6 +46,11 @@
           <span class="material-symbols-outlined">list</span>
         </a>
         {% if session['user'] %}
+          <a href='/groups'>
+            <span class="material-symbols-outlined">
+            groups
+            </span>
+          </a>
           <a onclick="excluirConta()">
             <span class="material-symbols-outlined">person_remove</span>
           </a>

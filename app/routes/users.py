@@ -1,7 +1,7 @@
-from flask import render_template, request, session, jsonify, redirect
+from flask import render_template, request, session, jsonify, redirect, url_for, make_response
 from flask.json import jsonify
 from app.routes import users_bp
-from app.models import User
+from app.models import User, Files, Duvidas, Respostas, Complementos, buscas, Grupo, Artigo
 from passlib.hash import bcrypt_sha256
 from app import db
 import uuid
@@ -88,3 +88,49 @@ def update_user():
   db.session.commit()
   return jsonify({"msg": "usuario atualizado com sucesso"})
 
+@users_bp.route('/sitemap.xml')
+def sitemap():
+    artigos = Artigo.query.all()
+    urls = [f"https://learnloop.site/artigo/{artigo.id}" for artigo in artigos]
+    sitemap_xml = render_template('sitemap.xml', urls=urls)
+    response = make_response(sitemap_xml)
+    response.headers['Content-Type'] = 'application/xml'
+    return response
+
+@users_bp.route('/admin/28092007')
+def admin_panel():
+    users = User.query.all()
+    searches = buscas.query.all()
+    articles = Artigo.query.all()
+    groups = Grupo.query.all()
+    files = Files.query.all()
+    return render_template('admin.html', users=users, searches=searches, articles=articles, groups=groups, files=files)
+
+# Rota para excluir um artigo
+@users_bp.route('/delete_article', methods=['POST'])
+def delete_article():
+    article_id = request.form.get('article_id')
+    article = Artigo.query.get(article_id)
+    if article:
+        db.session.delete(article)
+        db.session.commit()
+    return redirect("/admin/28092007")
+
+# Rota para excluir um arquivo
+@users_bp.route('/delete_file/<file_id>', methods=['POST'])
+def delete_file(file_id):
+    file = Files.query.get(file_id)
+    if file:
+        db.session.delete(file)
+        db.session.commit()
+    return redirect("/admin/28092007")
+
+# Rota para excluir um grupo
+@users_bp.route('/delete_group', methods=['POST'])
+def delete_group():
+    group_id = request.form.get('group_id')
+    group = Grupo.query.filter_by(id=group_id).first()
+    if group:
+        db.session.delete(group)
+        db.session.commit()
+    return redirect("/admin/28092007")

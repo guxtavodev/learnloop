@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Reem+Kufi+Fun:wght@400;600;700&family=Roboto:wght@300;400;500&family=Ubuntu:wght@400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+            line-height: 1.6;
+        }
+
+        :root {
+            --corDestaque: #aeff00;
+            --corFonteBtn: #000;
+            --corFundo: #000029;
+            --corFonte: #ffffff;
+            --corSecundaria: #0d3d00;
+            --fontTitle: 'Reem Kufi Fun', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+            --fontText: 'Ubuntu', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        }
+
+        body.dark-mode {
+            padding-left: 2em;
+            padding-right: 2em;
+            color: var(--corFonte);
+            background: var(--corFundo);
+        }
+
+        body.light-mode {
+            background: #f0fff1;
+            color: #000;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        header nav {
+            display: flex;
+            gap: 1em;
+        }
+
+        button {
+            background-color: var(--corDestaque);
+            color: var(--corFonteBtn);
+            width: 100%;
+            padding: 6px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        header h1 {
+            font-family: var(--fontTitle);
+        }
+
+        nav a {
+            color: #fff;
+            font-size: 10px;
+        }
+
+        nav {
+            align-items: center;
+        }
+
+        nav a span {
+            font-size: 2em;
+        }
+
+        .container {
+            margin: 0 auto;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7em;
+            padding: 1em;
+        }
+
+        .container h3 {
+            font-size: 2em;
+        }
+
+        .infos,
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+        }
+
+        input,
+        textarea {
+            outline: none;
+            border: 0.5px solid #000;
+            border-radius: 3px;
+            padding: 5px;
+        }
+
+        textarea {
+            height: 300px;
+        }
+
+        small a {
+            color: #fff;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            background: #fff;
+            border-radius: 6px;
+        }
+
+        @media screen and (max-width: 1000px) {
+            .container {
+                width: 100%;
+            }
+
+            body {
+                padding-left: 1em;
+                padding-right: 1em;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header>
+        <h1>Painel de Administração</h1>
+
+    </header>
+
+    <div class="container">
+        <h3>Usuários</h3>
+      <details>
+        <summary>Abrir infos</summary>
+        <ul>
+            {% for user in users %}
+                <li>{{ user.username }}</li>
+            {% endfor %}
+        </ul>
+      </details>
+
+        <h3>Excluir Artigo</h3>
+        <form action="/delete_article" method="post">
+            <label for="article_id">ID do Artigo:</label>
+            <input type="text" id="article_id" name="article_id">
+            <button type="submit">Excluir</button>
+        </form>
+
+        <h3>Buscas</h3>
+      <details>
+        <summary>Abrir infos</summary>
+        <ul>
+            {% for search in searches %}
+                <li>{{ search.termo }}</li>
+            {% endfor %}
+        </ul>
+      </details>
+        <h3>Artigos</h3>
+      <details>
+        <summary>Abrir infos</summary>
+        <ul>
+            {% for article in articles %}
+                <li>{{ article.titulo }} - <a href="/delete_article/{{ article.id }}" onclick="return confirm('Tem certeza que deseja excluir este artigo?')">Excluir</a></li>
+            {% endfor %}
+        </ul>
+      </details>
+
+        <h3>Excluir Grupo</h3>
+        <form action="/delete_group" method="post">
+            <label for="group_id">ID do Grupo:</label>
+            <input type="text" id="group_id" name="group_id">
+            <button type="submit">Excluir</button>
+        </form>
+
+        <h3>Grupos</h3>
+      <details>
+        <summary>Abrir infos</summary>
+        <ul>
+            {% for group in groups %}
+                <li>{{ group.nome }} - {{ group.descricao }} / {{group.id}}</li>
+            {% endfor %}
+        </ul>
+      </details>
+
+        <h3>Arquivos</h3>
+      <details>
+        <summary>Abrir infos</summary>
+        <ul>
+            {% for file in files %}
+                <li>{{ file.nome }} - {{ file.group }}</li>
+            {% endfor %}
+        </ul>
+
+      </details>
+    </div>
+
+</body>
+</html>

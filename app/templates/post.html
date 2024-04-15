@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}LearnLoop One{% endblock %}
+{% block title %} {{artigo.titulo}} {% endblock %}
+{% block metas %}
+<meta name="description" content="Leia esse artigo incrível sobre {{artigo.titulo}} com uma linguagem descontraída, leve e inovadora e saia daqui aprendendo de fato.">
+<meta name="keywords" content="{{artigo.tags}}">
+{% endblock %}
 
 {% block styled %}
 <style>

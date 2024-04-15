@@ -5,6 +5,7 @@ class User(db.Model):
   id = db.Column(db.String(), primary_key=True)
   username = db.Column(db.String(64), index=True, unique=True)
   password = db.Column(db.String())
+  
 
   def __init__(self, id, username, password):
     self.id = id
@@ -89,6 +90,35 @@ class buscas(db.Model):
   def __init__(self, user, termo):
     self.user = user
     self.termo = termo
+
+class Grupo(db.Model):
+  id = db.Column(db.String(), primary_key=True)
+  nome = db.Column(db.String(64))
+  descricao = db.Column(db.String(128))
+  membros = db.Column(db.String(64))
+  prazo = db.Column(db.DateTime())
+  organizacao = db.Column(db.String())
+  wikis = db.Column(db.String())
+
+  def __init__(self, id, nome, descricao, membros, organizacao, wikis, prazo):
+    self.id = id
+    self.nome = nome
+    self.descricao = descricao
+    self.membros = membros
+    self.organizacao = organizacao
+    self.wikis = wikis
+    self.prazo = prazo
+
+class Files(db.Model):
+  id = db.Column(db.String(), primary_key=True)
+  nome = db.Column(db.String(64))
+  group = db.Column(db.String())
+
+  def __init__(self, id, nome, group):
+    self.id = id
+    self.nome = nome
+    self.group = group
+
 
 with app.app_context():
   db.create_all()

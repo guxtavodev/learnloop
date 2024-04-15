@@ -2,23 +2,98 @@
 
 {% block title %}LearnLoop One | Página Inicial{% endblock %}
 
+{% block metas %}
+<title>LearnLoop | Página Inicial</title>
+<meta name="description" content="A LearnLoop é a maior plataforma de estudos do Brasil, impulsionada pela Inteligência Artificial! Criada por estudantes para estudantes, junte-se à revolução educacional!">
+<meta name="keywords" content="plataforma de estudos, site para estudos, inteligência artificial para estudos, plataforma educacional online, aprendizado online, aprendizado personalizado, recursos educacionais interativos, estudos descontraído">
+{% endblock %}
+
 {% block styled %}
 <style>
-  .mapa-btn{
+  /* Estilos dos botões e artigos */
+  .mapa-btn {
     display: flex;
     gap: 0.6em;
     flex-wrap: wrap;
   }
 
-  .mapa-btn button{
+  .mapa-btn button {
     width: 40%;
     padding: 15px;
     font-weight: 700;
     font-size: 16px;
+    background-color: #aeff00;
+    color: #000;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
   }
 
+  .mapa-btn button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: width 0.5s ease, height 0.5s ease, top 0.5s ease, left 0.5s ease;
+    border-radius: 50%;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  .mapa-btn button:hover::before {
+    width: 400%; /* Ajuste o tamanho para fazer a cor parecer mais clara */
+    height: 400%; /* Ajuste o tamanho para fazer a cor parecer mais clara */
+    top: -150%; /* Ajuste a posição para centralizar o brilho */
+    left: -150%; /* Ajuste a posição para centralizar o brilho */
+    background-color: rgba(255, 255, 255, 0.3); /* Cor mais clara ao passar o mouse */
+  }
+
+  .mapa-btn button span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .list-artigos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+
+  .artigo {
+    opacity: 0;
+    transform: translateX(-50px);
+    padding: 7px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    width: 40%;
+  }
+
+  .artigo:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Estilos responsivos */
   @media screen and (max-width: 1000px) {
-    .mapa-btn button{
+    .mapa-btn button {
+      width: 100%;
+    }
+
+    .artigo {
       width: 100%;
     }
   }
@@ -27,27 +102,84 @@
 
 {% block content %}
 <div class="container">
-  <h3>Welcome to LearnLoop</h3>
-  <p>Descubra o LearnLoop One, a plataforma educacional líder na Bahia! Criada por um estudante, estamos dedicados a entender as dificuldades que todos os estudantes enfrentam ao estudar. Constantemente atualizados, transformamos o LearnLoop em uma plataforma cada vez mais poderosa. Junte-se a nós para explorar um mundo de possibilidades cativantes, colaborativas e eficazes, moldando o futuro da educação no LearnLoop One! 🚀</p>
+  <h3><span id="username-placeholder"></span></h3>
+  <p>Explore os mais recentes artigos do LearnLoop!</p>
+  <div id='ultimos-artigos' class="list-artigos">
+    {% for artigo in artigos %}
+    <div onclick="window.location.href = '/artigo/{{artigo.id}}'" class="artigo">
+      <strong>{{artigo.titulo}}</strong>
+      <small>{{artigo.categoria}}</small>
+    </div>
+    {% endfor %}
+  </div>
+  <p>Siga nosso Instagram para ficar por dentro das atualizações, tirar dúvidas e ver tutoriais sobre o site: <a href='https://instagram.com/learnloop.of' style='color: #fff;'>@learnloop.of clique aqui para ir direto para nosso perfil</a> </p>
 </div>
 
 <div class="container">
-<section onclick="window.location.href='https://www.instagram.com/realengof7'">
-  <img src="{{url_for('static', filename='img/ads.png')}}">
-</section>
+  <section onclick="window.location.href='https://www.instagram.com/realengof7'">
+    <img src="{{url_for('static', filename='img/ads.png')}}" alt="Anúncio">
+  </section>
 </div>
 
 <div class="container">
-  <h3>O que você quer fazer?</h3>
+  <h3>Escolha uma opção:</h3>
   <div class="mapa-btn">
-    <button onclick="window.location.href='/feed/duvidas'">Fórum de Dúvidas</button>
-    <button onclick="window.location.href = '/feed/artigos'">Feed de artigos</button>
-    <button onclick="window.location.href = '/avaliar-redacao'">Treino de redação</button>
-    <button onclick="window.location.href= '/plan'">LearnPlan</button>
-    <button onclick="window.location.href = '/quiz'">LearnQuiz</button>
-    <button onclick="window.location.href = '/feed/projetos-feciba'">Projetos FECIBA</button>
+    <button onclick="window.location.href='/feed/duvidas'"><span>Fórum de Dúvidas</span></button>
+    <button onclick="window.location.href = '/feed/artigos'"><span>Feed de Artigos</span></button>
+    <button onclick="window.location.href = '/avaliar-redacao'"><span>Treino de Redação</span></button>
+    <button onclick="window.location.href= '/plan'"><span>LearnPlan</span></button>
+    <button onclick="window.location.href = '/quiz'"><span>LearnQuiz</span></button>
+    <button onclick="window.location.href = '/feed/projetos-feciba'"><span>Projetos FECIBA</span></button>
+    <button onclick="window.location.href = '/groups'"><span>LearnGroups</span></button>
   </div>
 </div>
 
+<script>
+  /* Função para simular a digitação do nome do usuário */
+  function typeUsername(element, text, delay = 100) {
+    let index = 0;
+    function type() {
+      if (index < text.length) {
+        element.textContent += text.charAt(index);
+        index++;
+        setTimeout(type, delay);
+      }
+    }
+    type();
+  }
+
+  /* Função para exibir os artigos com animação */
+  function showArticles() {
+    const articles = document.querySelectorAll('.artigo');
+    articles.forEach((article, index) => {
+      setTimeout(() => {
+        article.classList.add('show');
+      }, index * 400); // Ajuste o tempo conforme necessário
+    });
+  }
+
+  /* Função para determinar o emoji com base no horário */
+  function getEmojiByTime() {
+    const hour = new Date().getHours();
+    let emoji;
+    if (hour >= 5 && hour < 12) {
+      emoji = '☀️'; // Manhã
+    } else if (hour >= 12 && hour < 18) {
+      emoji = '🌤️'; // Tarde
+    } else {
+      emoji = '🌙'; // Noite
+    }
+    return emoji;
+  }
+
+  /* Evento disparado após o carregamento do DOM */
+  document.addEventListener('DOMContentLoaded', function() {
+    const usernameElement = document.getElementById('username-placeholder');
+    const username = '{{user.username}}' || 'Visitante';
+    const greeting = `Olá, ${username} ${getEmojiByTime()}`;
+    typeUsername(usernameElement, greeting);
+    showArticles();
+  });
+</script>
 
 {% endblock %}

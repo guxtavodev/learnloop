@@ -18,6 +18,29 @@
     flex-direction: column;
     cursor: pointer;
   }
+
+  .list-artigos {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+  }
+
+  .artigo {
+      padding: 7px;
+      border: none; /* Remover a borda */
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.2); /* Adicionar cor de fundo com transparência */
+      backdrop-filter: blur(10px); /* Aplicar o efeito de vidro */
+      transition: background-color 0.3s ease; /* Adicionar transição suave para a cor de fundo */
+  }
+
+  .artigo:hover {
+      background-color: rgba(255, 255, 255, 0.3); /* Ajustar a cor de fundo ao passar o mouse */
+  }
+
 </style>
 {% endblock %}
 

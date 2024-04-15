@@ -17,7 +17,17 @@ openai.api_key = os.environ["OPENAI"]
 
 @artigos_bp.route("/")
 def homepage():
-  return render_template("index.html")
+    try:
+        user = session.get('user', 'Visitante')
+        if user != 'Visitante':
+            user_db = User.query.filter_by(id=user).first()
+        else:
+            user_db = None
+        ultimos_artigos = Artigo.query.order_by(Artigo.id.desc()).limit(4)
+        return render_template("index.html", user=user_db, artigos=ultimos_artigos)
+    except:
+        return render_template("index.html")
+
 
 @artigos_bp.route("/avaliar-redacao")
 def redacion():
@@ -166,9 +176,11 @@ def search_word_files(directory, search_terms):
 @artigos_bp.route("/search/artigos")
 def artigosSearch():
     pesquisa_i = request.args.get("pesquisa")
+    
     pesquisa = pesquisa_i.lower()  # Converter a pesquisa para letras minúsculas para pesquisa insensível a maiúsculas/minúsculas
     try:
       user = session["user"]
+      
     except:
       user = "visit"
     newBsc = buscas(user=user, termo=pesquisa)

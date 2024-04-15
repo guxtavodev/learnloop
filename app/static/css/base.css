@@ -19,11 +19,16 @@
   --fontText: 'Ubuntu', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-body{
+body.dark-mode{
   padding-left: 2em;
   padding-right: 2em;
   color: var(--corFonte);
   background: var(--corFundo);
+}
+
+body.light-mode{
+  background: #f0fff1;
+  color: #000;
 }
 
 header {
