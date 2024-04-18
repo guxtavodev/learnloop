@@ -31,7 +31,11 @@ def homepage():
 
 @artigos_bp.route("/avaliar-redacao")
 def redacion():
-  return render_template("treino-redacao.html")
+  try:
+    user = session["user"]
+    return render_template("treino-redacao.html")
+  except:
+    return redirect("/login")
 
 # Rota para criar um artigo (pode ser acessada via POST ou GET)
 @artigos_bp.route("/create-artigo", methods=["POST", "GET"])
