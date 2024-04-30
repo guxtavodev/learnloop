@@ -20,8 +20,6 @@
 }
 
 body.dark-mode{
-  padding-left: 2em;
-  padding-right: 2em;
   color: var(--corFonte);
   background: var(--corFundo);
 }
