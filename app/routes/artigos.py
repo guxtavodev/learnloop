@@ -267,7 +267,7 @@ def gerarAvaliacaoPorIa():
     
       return jsonify({
         "msg": "success",
-        "response": assistant_response
+        "response": markdown.markdown(assistant_response)
       })
   except KeyError:
     return redirect('/login')

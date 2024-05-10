@@ -119,6 +119,19 @@ class Files(db.Model):
     self.nome = nome
     self.group = group
 
+class SessionStudy(db.Model):
+  user = db.Column(db.String())
+  assunto = db.Column(db.String())
+  resumo = db.Column(db.String())
+  id = db.Column(db.String(), primary_key=True)
+  data = db.Column(db.DateTime())
+
+  def __init__(self, user, assunto, resumo, data):
+    self.user = user
+    self.assunto = assunto
+    self.resumo = resumo 
+    self.data = data
+
 
 with app.app_context():
   db.create_all()
