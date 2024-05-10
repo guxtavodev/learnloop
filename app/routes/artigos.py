@@ -47,6 +47,7 @@ def criarArtigo():
         conteudo = request.form["conteudo-art"]
         categoria = request.form["category"]
         tags = request.form["tags"]
+      
 
         # Valida os dados do formulário
         if title == "" or title == " " or len(conteudo) < 1:
