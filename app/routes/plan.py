@@ -19,7 +19,8 @@ def planPage():
   except:
     return redirect('/login')
   plano = LearnPlan.query.filter_by(autor=session["user"]).first()
-  return render_template("plan.html", plano=plano)
+  sessoes = SessionStudie.query.filter_by(user=session["user"]).all()
+  return render_template("plan.html", plano=plano, sessions=sessoes)
 
 @iaplan_bp.route("/plan/save", methods=["POST"])
 def savePlan():
