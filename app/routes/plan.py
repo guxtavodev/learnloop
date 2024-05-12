@@ -12,7 +12,7 @@ import datetime
 
 openai.api_key = os.environ["OPENAI"]
 
-@iaplan_bp.route("/plan")
+@iaplan_bp.route("/session")
 def planPage():
   try:
     user = session['user']
@@ -44,17 +44,17 @@ def saveSession():
     if user_db:
       data = request.get_json()
       tempo = data["tempo"]
-      data = datetime.date.today()
-      resumo = data["resumo"]
+      data_session = datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+      resumo = markdown.markdown(data["resumo"])
       assunto = data["assunto"]
-      newSession = SessionStudie(user=user_db.id, assunto= assunto, resumo=resumo, data=data, tempo=tempo, id=str(uuid.uuid4()))
+      newSession = SessionStudie(user=user_db.id, assunto= assunto, resumo=resumo, data=data_session, tempo=tempo, id=str(uuid.uuid4()))
       db.session.add(newSession)
       db.session.commit()
 
       return jsonify({"msg": "success"})
 
-  except:
-      return redirect("/login")
+  except Exception as e:
+      return jsonify({"msg": f"deu erro: {e}"})
 
 @iaplan_bp.route("/api/delete-session/<id>")
 def removeSession(id):
@@ -62,12 +62,13 @@ def removeSession(id):
   db.session.delete(session)
   db.session.commit()
 
-  return redirect("/plan")
+  return redirect("/session")
 
 @iaplan_bp.route("/api/get-resumo-ia", methods=["POST"])
 def getResumo():
   try:
     user = session["user"]
+    data = request.get_json()
     anotacoes = data["notes"]
     user_message = {"role": "user", "content": f"Minhas anotações: {anotacoes}"}
 
@@ -83,7 +84,7 @@ def getResumo():
 
     resposta = response.choices[0].message["content"]
 
-    return ({"msg": resposta})
+    return jsonify({"msg": resposta})
 
-  except:
-    return redirect("/login")
+  except Exception as e:
+    return jsonify({"msg": f"deu erro: {e}"})

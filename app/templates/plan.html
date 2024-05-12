@@ -3,7 +3,41 @@
 {% block title %}LearnLoop One{% endblock %}
 
 {% block styled %}
-<style></style>
+<style>
+
+
+ 
+  .container div input, textarea{
+    width: 100%;
+  }
+
+  
+  .session-list {
+    margin-top: 20px;
+  }
+
+  .session-list div {
+    margin-bottom: 10px;
+  }
+
+  .group-bottons {
+    display: flex;
+    gap: 0.5em;
+  }
+
+
+  #cronometro{
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .sessao-estudos {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  
+</style>
 {% endblock %}
 
 {% block content %}
@@ -11,38 +45,40 @@
   <h3>Sessão de estudos</h3>
 
   <div>
-    <input type="text" placeholder="Qual o assunto que você está estudando?"></input>
-    <div>
-      <p>Tempo estudado: 04:00:00</p>
-      <div>
-        <button>Iniciar</button>
-        <button>Pausar</button>
-        <button>Parar</button>
+    <input id="assunto" type="text" placeholder="Qual o assunto que você está estudando?">
+    <div id="cronometro">
+      <strong>Tempo estudado</strong>
+      <p id="tempo-estudado">00:00:00</p>
+      <div class="group-bottons">
+        <button id="iniciar">Iniciar</button>
+        
+        <button id="parar">Parar</button>
       </div>
     </div>
 
     <textarea id="resumo" placeholder="Digite aqui suas anotações"></textarea>
-    <div>
-      <button>Aprimorar Anotação com IA</button>
-      <button>Salvar Sessão de estudos</button>
+    <div class="group-bottons">
+      <button id="aprimorar">Aprimorar Anotação com IA</button>
+      <button id="salvar">Salvar Sessão de estudos</button>
     </div>
   </div>
 </div>
 
-
-<div>
+<div class="container">
   <h3>Suas últimas sessões de estudos</h3>
-  <div>
-    <div>
-      <p><strong>Assunto - 04:00:00</strong></p>
+  <div class="session-list">
+    {% for session in sessions %}
+    <div class="sessao-estudos" data-assunto="{{session.assunto}}" data-dia="{{session.data}}" data-resumo="{{session.resumo}}" data-tempo="{{session.tempo}}">
+      <p><strong>{{session.assunto}} - {{session.tempo}}</strong></p>
+      <span class="material-symbols-outlined" onclick="window.location.href = '/api/delete-session/{{session.id}}'">
+delete
+      </span>
     </div>
+    {% endfor %}
   </div>
 </div>
-    
 
-      
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js" integrity="sha512-WrdC3CE9vf1nBf58JHepuWT4x24uTacky9fuzw2g/3L9JkihgwZ6Cfv+JGTtNyosOhEmttMtEZ6H3qJWfI7gIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <script src="{{url_for('static', filename='js/plan.js')}}"></script>
 {% endblock %}

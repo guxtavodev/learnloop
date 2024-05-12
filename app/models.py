@@ -124,7 +124,7 @@ class SessionStudie(db.Model):
   assunto = db.Column(db.String())
   resumo = db.Column(db.String())
   id = db.Column(db.String(), primary_key=True)
-  data = db.Column(db.DateTime())
+  data = db.Column(db.String())
   tempo = db.Column(db.String())
 
   def __init__(self, user, assunto, resumo, data, tempo, id):
