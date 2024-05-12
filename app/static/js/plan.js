@@ -15,12 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
   let cronometroRodando = false; // Indicador se o cronômetro está rodando
 
   // Função para formatar o tempo estudado
-  function formatarTempo(segundos) {
-    const horas = Math.floor(segundos / 3600);
-    const minutos = Math.floor((segundos % 3600) / 60);
-    const seg = segundos % 60;
-    return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
-  }
+  // Função para formatar o tempo estudado
+function formatarTempo(segundos) {
+  const horas = Math.floor(segundos / 3600);
+  const minutos = Math.floor((segundos % 3600) / 60);
+  const seg = segundos % 60;
+  return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+}
+
 
   // Função para iniciar o cronômetro
   function iniciarCronometro() {
@@ -31,7 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const seg = parseInt(tempoArray[2]);
 
       // Incrementar o tempo estudado
-      tempoEstudado = formatarTempo(seg + 1);
+      // Incrementar o tempo estudado se o cronômetro estiver rodando
+if (cronometroRodando) {
+  tempoEstudado = formatarTempo(seg + 1);
+}
+
 
       // Atualizar o texto do tempo estudado
       document.getElementById('tempo-estudado').innerText =  tempoEstudado;
