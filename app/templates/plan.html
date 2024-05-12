@@ -4,7 +4,30 @@
 
 {% block styled %}
 <style>
+.sessao-estudos {
+    
+    transform: translateX(-50px);
+    padding: 7px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    width: 100%;
+  margin: 0 auto;
+  }
 
+  .sessao-estudos:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .show {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
  
   .container div input, textarea{
@@ -13,12 +36,15 @@
 
   
   .session-list {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    margin: 0 auto; 
+    width: 100%;
+    margin-left: 2.9em;
   }
 
-  .session-list div {
-    margin-bottom: 10px;
-  }
+  
 
   .group-bottons {
     display: flex;

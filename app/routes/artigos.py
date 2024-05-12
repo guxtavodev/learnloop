@@ -10,6 +10,7 @@ import os
 from docx import Document
 import json
 import openai 
+from sqlalchemy import desc
 
 
 
@@ -23,7 +24,7 @@ def homepage():
             user_db = User.query.filter_by(id=user).first()
         else:
             user_db = None
-        ultimos_artigos = Artigo.query.order_by(Artigo.id.desc()).limit(4)
+        ultimos_artigos = Artigo.query.order_by(desc(Artigo.likes)).limit(4).all()
         return render_template("index.html", user=user_db, artigos=ultimos_artigos)
     except:
         return render_template("index.html")
