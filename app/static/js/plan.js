@@ -25,25 +25,27 @@ function formatarTempo(segundos) {
 
 
   // Função para iniciar o cronômetro
-  function iniciarCronometro() {
-    cronometroInterval = setInterval(function() {
-      const tempoArray = tempoEstudado.split(':');
-      const horas = parseInt(tempoArray[0]);
-      const minutos = parseInt(tempoArray[1]);
-      const seg = parseInt(tempoArray[2]);
+  // Função para iniciar o cronômetro
+function iniciarCronometro() {
+  const startTime = Date.now() - tempoEstudado * 1000; // Tempo inicial em milissegundos
 
-      // Incrementar o tempo estudado
-      // Incrementar o tempo estudado se o cronômetro estiver rodando
-if (cronometroRodando) {
-  tempoEstudado = formatarTempo(seg + 1);
+  function atualizarTempo() {
+    const elapsedTime = Date.now() - startTime; // Tempo decorrido em milissegundos
+    const segundos = Math.floor(elapsedTime / 1000); // Converter para segundos
+
+    // Atualizar o tempo estudado
+    tempoEstudado = formatarTempo(segundos);
+    document.getElementById('tempo-estudado').innerText = tempoEstudado;
+
+    // Agendar a próxima atualização após 1 segundo
+    setTimeout(atualizarTempo, 1000);
+  }
+
+  // Iniciar a atualização do tempo
+  atualizarTempo();
+  cronometroRodando = true;
 }
 
-
-      // Atualizar o texto do tempo estudado
-      document.getElementById('tempo-estudado').innerText =  tempoEstudado;
-    }, 1000);
-    cronometroRodando = true;
-  }
 
   // Função para pausar o cronômetro
   function pausarCronometro() {
