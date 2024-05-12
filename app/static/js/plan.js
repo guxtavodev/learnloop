@@ -16,35 +16,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Função para formatar o tempo estudado
   // Função para formatar o tempo estudado
-function formatarTempo(segundos) {
-  const horas = Math.floor(segundos / 3600);
-  const minutos = Math.floor((segundos % 3600) / 60);
-  const seg = segundos % 60;
-  return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+// Função para formatar o tempo estudado
+function formatarTempo(horas, minutos, segundos) {
+  return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
 }
 
 
-  // Função para iniciar o cronômetro
-  // Função para iniciar o cronômetro
-function iniciarCronometro() {
-  const startTime = Date.now() - tempoEstudado * 1000; // Tempo inicial em milissegundos
 
-  function atualizarTempo() {
-    const elapsedTime = Date.now() - startTime; // Tempo decorrido em milissegundos
-    const segundos = Math.floor(elapsedTime / 1000); // Converter para segundos
+  // Função para iniciar o cronômetro
+  // Função para iniciar o cronômetro
+// Função para iniciar o cronômetro
+function iniciarCronometro() {
+  let horas = 0;
+  let minutos = 0;
+  let segundos = 0;
+
+  cronometroInterval = setInterval(function() {
+    segundos++;
+
+    if (segundos === 60) {
+      segundos = 0;
+      minutos++;
+    }
+
+    if (minutos === 60) {
+      minutos = 0;
+      horas++;
+    }
 
     // Atualizar o tempo estudado
-    tempoEstudado = formatarTempo(segundos);
+    tempoEstudado = formatarTempo(horas, minutos, segundos);
     document.getElementById('tempo-estudado').innerText = tempoEstudado;
+  }, 1000);
 
-    // Agendar a próxima atualização após 1 segundo
-    setTimeout(atualizarTempo, 1000);
-  }
-
-  // Iniciar a atualização do tempo
-  atualizarTempo();
   cronometroRodando = true;
 }
+
 
 
   // Função para pausar o cronômetro
