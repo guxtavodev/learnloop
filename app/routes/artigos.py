@@ -320,7 +320,7 @@ def gerarQuizPorIa():
 
         # Defina a conversa com a mensagem do sistema e a mensagem do usuário
         conversation = [
-            {"role": "system", "content": "Você é uma Inteligência Artificial que gera quizzes automático de acordo com algum resumo que o usuário enviar, se não for um resumo, o usuário enviará apenas o assunto que ele tem dificuldade, e você vai gerar um quiz básico sobre o assunto. Crie com uma linguagem descontraída e autêntica, sem referências a outros sites, blogs, ou artigos já publicados. Modelo onde o usuário vai inserir a resposta: '(Resposta:  )' deixe sempre o campo de resposta vazio, você não vai responder nada."},
+            {"role": "system", "content": "Você é uma Inteligência Artificial que gera 1 pergunta de acordo com algum resumo que o usuário enviar, se não for um resumo, o usuário enviará apenas o assunto que ele tem dificuldade, e você vai gerar um quiz básico sobre o assunto. Crie com uma linguagem descontraída e autêntica, sem referências a outros sites, blogs, ou artigos já publicados."},
             user_message
         ]
 
@@ -346,9 +346,9 @@ def corrigeQuizPorIa():
   try:
     user = session['user']
     userDb = User.query.filter_by(id=user).first()
-    if userDb:
+    if user:
       data = request.get_json()
-      user_message = {"role": "user", "content": f"{data['quiz']}"}
+      user_message = {"role": "user", "content": f"Pergunta: {data['pergunta']} // Resposta: {data['resposta']}'"}
     
       # Defina a conversa com a mensagem do sistema e a mensagem do usuário
       conversation = [
@@ -370,8 +370,8 @@ def corrigeQuizPorIa():
         "msg": "success",
         "response": assistant_response
       })
-  except KeyError:
-    return redirect('/login')
+  except Exception as e:
+    return print("erro:" + str(e))
 
 @artigos_bp.route("/quiz")
 def quiz():

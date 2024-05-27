@@ -6,12 +6,15 @@
 <div class="container">
   <h3>LearnQuiz</h3>
   <div id="sla" style="display: flex; flex-direction: column; gap: 0.6em;">
-
-    <textarea name="texto" placeholder="Coloque os detalhes por aqui" id="area"></textarea>
-<button onclick="corrigirQuiz()">Enviar Respostas</button>
+    
+    <p id="question"></p>
+    <input type="text" name="texto" placeholder="Digite sua resposta aqui" id="answer"></input>
+<button onclick="corrigirQuiz()">Enviar Resposta</button>
     
   </div>
-  <button onclick="gerarQuiz()">Criar quiz com Learn.Ai</button>
+  <button onclick="gerarQuiz()">Criar pergunta com Learn.Ai</button>
+
+  <textarea id="info-topic" placeholder="Digite o assunto que você quer treinar aqui"></textarea>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
