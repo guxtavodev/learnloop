@@ -1,16 +1,16 @@
 # Importação dos módulos e classes necessárias
-from flask import render_template, redirect, session, jsonify, request, url_for, make_response, send_file
+from flask import render_template, redirect, session, jsonify, request, send_file
 from app.routes import iaplan_bp
-from app.models import LearnPlan, SessionStudie, User
+from app.models import SessionStudie, User
 from app import db
-from passlib.hash import bcrypt_sha256
 import uuid
 import markdown
-import openai 
 import os
 import datetime
+from openai import OpenAI
 
-openai.api_key = os.environ["OPENAI"]
+client = OpenAI(api_key=os.environ["OPENAI"])
+
 
 @iaplan_bp.route("/session")
 def planPage():
@@ -77,8 +77,8 @@ def getResumo():
       user_message
     ]
 
-    response = openai.ChatCompletion.create(
-      model="gpt-3.5-turbo",
+    response = client.chat.completions.create(
+      model="gpt-4o",
       messages=conversation
     )
 

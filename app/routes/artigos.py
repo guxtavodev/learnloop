@@ -1,5 +1,5 @@
 # Importação dos módulos e classes necessárias
-from flask import render_template, redirect, session, jsonify, request, url_for, make_response, send_file, send_from_directory, Blueprint
+from flask import render_template, redirect, session, jsonify, request, make_response, send_file
 from app.routes import artigos_bp
 from app.models import Artigo, User, buscas
 from app import db
@@ -8,13 +8,11 @@ import uuid
 import markdown
 import os
 from docx import Document
-import json
-import openai 
 from sqlalchemy import desc
+from openai import OpenAI
 
 
-
-openai.api_key = os.environ["OPENAI"]
+client = OpenAI(api_key=os.environ["OPENAI"])
 
 @artigos_bp.route("/")
 def homepage():
@@ -257,8 +255,8 @@ def gerarAvaliacaoPorIa():
       ]
     
       # Obtenha a resposta do GPT-3
-      response = openai.ChatCompletion.create(
-          model="gpt-3.5-turbo",
+      response = client.chat.completions.create(
+          model="gpt-4o",
           messages=conversation
       )
     
@@ -289,10 +287,12 @@ def gerarArtigoPorIa():
       ]
     
       # Obtenha a resposta do GPT-3
-      response = openai.ChatCompletion.create(
-          model="gpt-3.5-turbo",
+      response = client.chat.completions.create(
+          model="gpt-4o",
           messages=conversation
       )
+
+      
     
       # Obtenha a mensagem de resposta do assistente
       assistant_response = response.choices[0].message["content"]
@@ -325,8 +325,8 @@ def gerarQuizPorIa():
         ]
 
         # Obtenha a resposta do GPT-3
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+        response = client.chat.completions.create(
+            model="gpt-4o",
             messages=conversation
         )
 
@@ -357,8 +357,8 @@ def corrigeQuizPorIa():
       ]
     
       # Obtenha a resposta do GPT-3
-      response = openai.ChatCompletion.create(
-          model="gpt-3.5-turbo",
+      response = client.chat.completions.create(
+          model="gpt-4o",
           messages=conversation
       )
     
@@ -393,8 +393,8 @@ def tiraDuvidaArtigo():
       ]
     
       # Obtenha a resposta do GPT-3
-      response = openai.ChatCompletion.create(
-          model="gpt-3.5-turbo",
+      response = client.chat.completions.create(
+          model="gpt-4o",
           messages=conversation
       )
     

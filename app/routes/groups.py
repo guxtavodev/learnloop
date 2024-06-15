@@ -1,17 +1,20 @@
-from flask import render_template, redirect, session, jsonify, request, url_for, make_response
+from flask import render_template, redirect, session, jsonify, request, make_response
 from app.routes import groups_bp
 from app.models import Grupo, User, Files
 from app import db
 import uuid
 from datetime import datetime
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from azure.storage.blob import BlobServiceClient
 import os
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 import re
 import urllib.parse
-import openai
+from openai import OpenAI
 
-openai.api_key = os.environ['OPENAI']
+
+
+client = OpenAI(api_key=os.environ["OPENAI"])
+
 
 # Função para verificar os grupos do usuário
 def check_groups_user(user_id):
@@ -151,8 +154,8 @@ def createGroup():
     ]
   
     # Obtenha a resposta do GPT-3
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+    response = client.chat.completions.create(
+        model="gpt-4o",
         messages=conversation
     )
   
