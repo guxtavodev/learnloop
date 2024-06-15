@@ -10,6 +10,10 @@
 
 {% block styled %}
 <style>
+
+
+
+  
   /* Estilos dos botões e artigos */
   .mapa-btn {
     display: flex;
@@ -103,7 +107,7 @@
 {% block content %}
 <div class="container">
   <h3><span id="username-placeholder"></span></h3>
-  <p>Explore os mais recentes artigos do LearnLoop!</p>
+  <p>Explore os mais recentes artigos do Estudaê!</p>
   <div id='ultimos-artigos' class="list-artigos">
     {% for artigo in artigos %}
     <div onclick="window.location.href = '/artigo/{{artigo.id}}'" class="artigo">
@@ -112,12 +116,12 @@
     </div>
     {% endfor %}
   </div>
-  <p>Siga nosso Instagram para ficar por dentro das atualizações, tirar dúvidas e ver tutoriais sobre o site: <a href='https://instagram.com/learnloop.of' style='color: #fff;'>@learnloop.of clique aqui para ir direto para nosso perfil</a> </p>
+  <p>Siga nosso Instagram para ficar por dentro das atualizações, tirar dúvidas e ver tutoriais sobre o site: <a href='https://instagram.com/estudae.of' style='color: #fff;'>@estudae.of clique aqui para ir direto para nosso perfil</a> </p>
 </div>
 
 <div class="container">
-  <section onclick="window.location.href='https://www.instagram.com/realengof7'">
-    <img src="{{url_for('static', filename='img/ads.png')}}" alt="Anúncio">
+  <section onclick="window.location.href='https://www.instagram.com/estudae.of'">
+    <img src="{{url_for('static', filename='img/ads-3.png')}}" alt="Anúncio">
   </section>
 </div>
 
@@ -128,9 +132,9 @@
     <button onclick="window.location.href = '/feed/artigos'"><span>Feed de Artigos</span></button>
     <button onclick="window.location.href = '/avaliar-redacao'"><span>Treino de Redação</span></button>
     <button onclick="window.location.href= '/session'"><span>Sessão de Estudos</span></button>
-    <button onclick="window.location.href = '/quiz'"><span>LearnQuiz</span></button>
+    <button onclick="window.location.href = '/quiz'"><span>Quiz com IA</span></button>
     <button onclick="window.location.href = '/feed/projetos-feciba'"><span>Projetos FECIBA</span></button>
-    <button onclick="window.location.href = '/groups'"><span>LearnGroups</span></button>
+    <button onclick="window.location.href = '/groups'"><span>Grupos de trabalho</span></button>
   </div>
 </div>
 

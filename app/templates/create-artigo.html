@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block content %}
-<div>
+<div class="container">
   <h3>Crie seu próprio artigo</h3>
   <form action='/create-artigo' method="POST" onsubmit="return onSubmit()">
     <input type="text" placeholder="Digite o título do artigo" name="title-art" required onfocus="showMessage('Você está indo bem!')">
