@@ -31,7 +31,7 @@ def homepage():
 @artigos_bp.route("/avaliar-redacao")
 def redacion():
   try:
-    user = session["user"]
+    
     return render_template("treino-redacao.html")
   except:
     return redirect("/login")
@@ -242,9 +242,7 @@ def feed_artigos():
 @artigos_bp.route("/learn-ai/redacao", methods=["POST"])
 def gerarAvaliacaoPorIa():
   try:
-    user = session['user']
-    userDb = User.query.filter_by(id=user).first()
-    if userDb:
+    
       data = request.get_json()
       user_message = {"role": "user", "content": f"Título: {data['title']} \n Redação: {data['content']}"}
     
@@ -256,7 +254,7 @@ def gerarAvaliacaoPorIa():
     
       # Obtenha a resposta do GPT-3
       response = client.chat.completions.create(
-          model="gpt-4o",
+          model="gpt-3.5-turbo",
           messages=conversation
       )
     
@@ -278,22 +276,27 @@ def gerarArtigoPorIa():
     userDb = User.query.filter_by(id=user).first()
     if userDb:
       data = request.get_json()
-      user_message = {"role": "user", "content": f"Conteúdo do usuário: {data['resumo']}"}
+      user_message = {"role": "user", "content": [{"text": f"Conteúdo do usuário: {data['resumo']}", "type": "text"}]}
     
       # Defina a conversa com a mensagem do sistema e a mensagem do usuário
       conversation = [
-          {"role": "system", "content": "Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos."},
+          {"role": "system", "content": [{"text": "Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos.", "type": "text"}]},
           user_message
       ]
     
       # Obtenha a resposta do GPT-3
       response = client.chat.completions.create(
           model="gpt-4o",
-          messages=conversation
+          messages=conversation,
+          temperature=1,
+        max_tokens=1000,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
       )
 
       
-    
+
       # Obtenha a mensagem de resposta do assistente
       assistant_response = response.choices[0].message["content"]
       print(assistant_response)
@@ -301,8 +304,8 @@ def gerarArtigoPorIa():
         "msg": "success",
         "response": assistant_response
       })
-  except:
-    return redirect('/login')
+  except Exception as e:
+    return print(f"Erro: {e}")
 
 @artigos_bp.route("/gerar/quiz", methods=["POST"])
 def gerarQuizPorIa():
