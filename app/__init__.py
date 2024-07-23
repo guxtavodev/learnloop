@@ -18,9 +18,8 @@ CORS(app, resources={
 
 
 # Importe e registre as blueprints (rotas) da sua aplicação
-from app.routes import artigos_bp, users_bp, duvidas_bp, iaplan_bp, groups_bp
+from app.routes import artigos_bp, users_bp, duvidas_bp, iaplan_bp
 app.register_blueprint(artigos_bp)
 app.register_blueprint(users_bp)
 app.register_blueprint(duvidas_bp)
 app.register_blueprint(iaplan_bp)
-app.register_blueprint(groups_bp)
