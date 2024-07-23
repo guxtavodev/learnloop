@@ -41,7 +41,7 @@ def criarArtigo():
         categoria = request.form["category"]
         tags = request.form["tags"]
 
-        if title == "" ou title == " " ou len(conteudo) < 1:
+        if title == "" or title == " " or len(conteudo) < 1:
             return "Digite algo válido!"
 
         try:
