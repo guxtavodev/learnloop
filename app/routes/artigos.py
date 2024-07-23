@@ -243,6 +243,10 @@ def gerarArtigoPorIa():
     except Exception as e:
         return print(f"Erro: {e}")
 
+@artigos_bp.route("/quiz")
+def quizPage():
+    return render_template("quiz.html")
+
 @artigos_bp.route("/gerar/quiz", methods=["POST"])
 def gerarQuizPorIa():
     try:
