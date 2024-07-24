@@ -272,8 +272,8 @@ def gerarQuizPorIa():
             "msg": "success",
             "response": assistant_response
         })
-    except KeyError:
-        return redirect('/login')
+    except Exception as e:
+        return print(e)
 
 @artigos_bp.route("/corrigir/quiz", methods=["POST"])
 def corrigeQuizPorIa():
@@ -294,6 +294,32 @@ def corrigeQuizPorIa():
             return jsonify({
                 "msg": "success",
                 "response": assistant_response
+            })
+    except KeyError:
+        return redirect('/login')
+
+
+@artigos_bp.route('/api/tirar-duvida-artigo', methods=["POST"])
+def tiraDuvidaArtigo():
+    try:
+        user = session['user']
+        userDb = User.query.filter_by(id=user).first()
+        if userDb:
+            data = request.get_json()
+            user_message = f"Artigo: {data['conteudo_artigo']}. Dúvida: {data['duvida']}"
+
+            genai.configure(api_key=os.environ["API_KEY"])
+            model = genai.GenerativeModel(
+                model_name="gemini-1.5-flash",
+                system_instruction="Você é uma Inteligência Artificial, que tira dúvida de um artigo. Você pode usar a base do artigo ou pegar outras referências. O importante é o usuário entender de vez o assunto. Responda de forma descontraída e não deixe o usuário fugir muito do artigo."
+            )
+            response = model.generate_content(user_message)
+
+            assistant_response = response.text
+            print(assistant_response)
+            return jsonify({
+                "msg": "success",
+                "resposta": assistant_response
             })
     except KeyError:
         return redirect('/login')
