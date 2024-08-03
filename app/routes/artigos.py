@@ -323,3 +323,77 @@ def tiraDuvidaArtigo():
             })
     except KeyError:
         return redirect('/login')
+
+from PIL import Image  # Adicionado
+
+@artigos_bp.route("/api/carregar-redacao", methods=["POST"])
+def carregar_redacao():
+    try:
+        # Verificar se o arquivo foi enviado
+        if 'foto' not in request.files or not request.files['foto'].filename:
+            return jsonify({"msg": "Nenhum arquivo enviado"}), 400
+
+        foto = request.files['foto']
+        filename = foto.filename
+
+        # Gerar um caminho seguro para a imagem temporária
+        image_path = os.path.join('/tmp', filename)
+
+        # Salvar a imagem temporariamente
+        foto.save(image_path)
+
+        # Configurar a API do Gemini
+        genai.configure(api_key=os.environ["API_KEY"])
+        img = Image.open(image_path)
+
+        # Utilizar o modelo Gemini para extrair o texto
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+        response = model.generate_content(["Digitalize a redação manuscrita pelo usuário.", img])
+
+        # Obter o texto da resposta
+        texto_extraido = response.text
+
+        # Retornar o texto extraído
+        return jsonify({"msg": "success", "redacao": texto_extraido})
+
+    except Exception as e:
+        print(f"Erro: {e}")
+        return jsonify({"msg": "error", "error": str(e)}), 500
+
+    finally:
+        # Remover a imagem temporária
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
+@artigos_bp.route("/api/gerar-artigo", methods=["POST"])
+def gerar_artigo():
+    try:
+        if 'foto' not in request.files or not request.files['foto'].filename:
+            return jsonify({"msg": "Nenhum arquivo enviado"}), 400
+
+        foto = request.files['foto']
+        filename = foto.filename
+        image_path = os.path.join('/tmp', filename)
+        foto.save(image_path)
+
+        genai.configure(api_key=os.environ["API_KEY"])
+        img = Image.open(image_path)
+
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+        response = model.generate_content(["Gere um artigo descontraído e leve com linguagem informal, exemplos do cotidiano etc. Para estudos, Com base na foto do resumo do caderno do usuário.", img])
+
+        texto_extraido = response.text
+
+        # Supondo que o modelo gere um artigo baseado no conteúdo extraído
+        
+
+        
+        return jsonify({"msg": "success", "artigo": texto_extraido})
+
+    except Exception as e:
+        print(f"Erro: {e}")
+        return jsonify({"msg": "error", "error": str(e)}), 500
+
+    finally:
+        if os.path.exists(image_path):
+            os.remove(image_path)

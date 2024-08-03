@@ -33,6 +33,41 @@ function gerarArtigo() {
   });
 }
 
+
+function gerarArtigoCaderno() {
+  Swal.fire({
+    title: 'Learn.Ai - Gerar Artigo a partir de Caderno',
+    html: `
+      <input type="file" id="foto-caderno" />
+    `,
+    showCancelButton: true,
+    confirmButtonText: 'Gerar Artigo',
+    preConfirm: () => {
+      const fotoCaderno = document.getElementById('foto-caderno').files[0];
+      if (!fotoCaderno) {
+        Swal.showValidationMessage('Por favor, envie uma imagem.');
+      }
+      
+      const formData = new FormData();
+      formData.append('foto', fotoCaderno);
+
+      return axios.post('/api/gerar-artigo', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        const artigo = response.data.artigo;
+        document.getElementById('conteudo-art').value = artigo;
+        localStorage.setItem('conteudoArtigo', artigo);
+      })
+      .catch(error => {
+        Swal.fire('Erro ao gerar artigo', error.message, 'error');
+      });
+    }
+  });
+}
+
 function previewArtigo() {
   var artigo = document.getElementById("conteudo-art").value 
   var converter = new showdown.Converter();
