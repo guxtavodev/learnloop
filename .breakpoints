@@ -7,14 +7,6 @@
         "version": 1942,
         "index": 0
       }
-    ],
-    "app/static/js/quiz.js": [
-      {
-        "id": "0541ebce-169d-43bb-9617-14f87225a266",
-        "line": 21,
-        "version": 719,
-        "index": 492
-      }
     ]
   }
 }

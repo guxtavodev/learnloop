@@ -290,13 +290,13 @@ def corrigeQuizPorIa():
             response = model.generate_content(f"Questões: {data['perguntas']}. Respostas do usuário: {data['respostas']}")
 
             assistant_response = response.text
-
+            print(assistant_response)
             return jsonify({
                 "msg": "success",
                 "response": assistant_response
             })
-    except KeyError:
-        return redirect('/login')
+    except Exception as e:
+        return redirect(f'Erro: {str(e)}')
 
 
 @artigos_bp.route('/api/tirar-duvida-artigo', methods=["POST"])
@@ -321,8 +321,8 @@ def tiraDuvidaArtigo():
                 "msg": "success",
                 "resposta": assistant_response
             })
-    except KeyError:
-        return redirect('/login')
+    except Exception as e:
+        return print(f"Houve um erro: {str(e)}")
 
 from PIL import Image  # Adicionado
 
