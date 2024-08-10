@@ -5,7 +5,7 @@
     <loc>{{ url }}</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
-    <lastmod>2024-06-15T12:30:45-03:00</lastmod> 
+    <lastmod>2024-08-10T12:30:45-03:00</lastmod> 
   </url>
   {% endfor %}
 </urlset>
