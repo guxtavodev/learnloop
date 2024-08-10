@@ -301,23 +301,20 @@ def corrigeQuizPorIa():
 
 @artigos_bp.route('/api/tirar-duvida-artigo', methods=["POST"])
 def tiraDuvidaArtigo():
-    try:
-        user = session['user']
-        userDb = User.query.filter_by(id=user).first()
-        if userDb:
-            data = request.get_json()
-            user_message = f"Artigo: {data['conteudo_artigo']}. Dúvida: {data['duvida']}"
+    try:  
+        data = request.get_json()
+        user_message = f"Artigo: {data['conteudo_artigo']}. Dúvida: {data['duvida']}"
 
-            genai.configure(api_key=os.environ["API_KEY"])
-            model = genai.GenerativeModel(
+        genai.configure(api_key=os.environ["API_KEY"])
+        model = genai.GenerativeModel(
                 model_name="gemini-1.5-flash",
                 system_instruction="Você é uma Inteligência Artificial, que tira dúvida de um artigo. Você pode usar a base do artigo ou pegar outras referências. O importante é o usuário entender de vez o assunto. Responda de forma descontraída e não deixe o usuário fugir muito do artigo."
             )
-            response = model.generate_content(user_message)
+        response = model.generate_content(user_message)
 
-            assistant_response = response.text
-            print(assistant_response)
-            return jsonify({
+        assistant_response = response.text
+        print(assistant_response)
+        return jsonify({
                 "msg": "success",
                 "resposta": assistant_response
             })
@@ -347,7 +344,8 @@ def carregar_redacao():
         img = Image.open(image_path)
 
         # Utilizar o modelo Gemini para extrair o texto
-        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash",
+                                     system_instruction="Você é uma Inteligência Artificial que digitaliza redações manuscritas que o usuário enviar, faça o melhor possível, se não conseguir entender alguma palavra, tente trocar por alguma semelhante, o importante é trazer resultados satisfatórios")
         response = model.generate_content(["Digitalize a redação manuscrita pelo usuário.", img])
 
         # Obter o texto da resposta
