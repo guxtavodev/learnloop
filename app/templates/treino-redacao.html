@@ -27,10 +27,28 @@
   </div>
   <button onclick="redacao()">Enviar</button>
   <button onclick="carregarFoto()">Carregar Foto do Caderno</button>
+  <button onclick="salvarRedacao()">Salvar Redação em sua conta</button>
 </div>
 
 <div class="container">
   <p id="resposta"></p>
+</div>
+
+<div class="container">
+  <h3>Suas Redações Salvas</h3>
+  {% if redacoes is not defined or redacoes.length == 0 %}
+  <p>Nenhuma Redação Salva.</p>
+  {% else %}
+  <div>
+    {% for redacao in redacoes %}
+    <details>
+      <summary>{{redacao.titulo}}</summary>
+      {{redacao.texto | safe}}
+    </details>
+{% endfor %}
+    
+  </div>
+  {% endif %}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

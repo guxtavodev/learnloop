@@ -1,7 +1,7 @@
 # Importação dos módulos e classes necessárias
 from flask import render_template, redirect, session, jsonify, request, make_response, send_file
 from app.routes import artigos_bp
-from app.models import Artigo, User, buscas
+from app.models import Artigo, User, buscas, Redacao
 from app import db
 from passlib.hash import bcrypt_sha256
 import uuid
@@ -28,9 +28,11 @@ def homepage():
 @artigos_bp.route("/avaliar-redacao")
 def redacion():
     try:
-        return render_template("treino-redacao.html")
-    except:
-        return redirect("/login")
+        user = session["user"]
+        redacoes = Redacao.query.filter_by(user=user).all()
+        return render_template("treino-redacao.html", redacoes=redacoes)
+    except Exception as e:
+        return print(f"Erro: {e}")
 
 # Rota para criar um artigo (pode ser acessada via POST ou GET)
 @artigos_bp.route("/create-artigo", methods=["POST", "GET"])
@@ -395,3 +397,4 @@ def gerar_artigo():
     finally:
         if os.path.exists(image_path):
             os.remove(image_path)
+

@@ -1,10 +1,11 @@
 from flask import render_template, request, session, jsonify, redirect, url_for, make_response, Response
 from flask.json import jsonify
 from app.routes import users_bp
-from app.models import User, Files, Duvidas, Respostas, Complementos, buscas, Grupo, Artigo
+from app.models import User, Files, Duvidas, Respostas, Complementos, buscas, Grupo, Artigo, Redacao
 from passlib.hash import bcrypt_sha256
 from app import db
 import uuid
+import markdown
 
 @users_bp.route("/guia")
 def guia():
@@ -150,3 +151,16 @@ def robots_txt():
     Sitemap: https://learnloop.site/sitemap.xml
     """
     return Response(robots_txt_content, mimetype='text/plain')
+
+@users_bp.route("/api/save-redacao", methods=["POST"])
+def SalvarRedacoes():
+    data = request.get_json()
+    user = User.query.filter_by(id=session["user"]).first()
+    redacao = Redacao(user=user.id, titulo=data["titulo"], texto=markdown.markdown(data["texto"]))
+    db.session.add(redacao)
+    db.session.commit()
+
+    return jsonify({
+        "msg": "success"
+    })
+

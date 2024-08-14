@@ -51,3 +51,50 @@ function carregarFoto() {
     }
   });
 }
+
+function salvarRedacao() {
+  var titulo = document.getElementById("titulo").value;
+  var texto = document.getElementById("conteudo").value;
+
+  Swal.fire({
+    title: "Salvando sua redação...",
+    text: "Por favor, aguarde.",
+    icon: "info",
+    allowOutsideClick: false,
+    showConfirmButton: false,
+    didOpen: () => {
+      Swal.showLoading();
+
+      axios.post("/api/save-redacao", {
+        titulo: titulo,
+        texto: texto
+      }).then((response) => {
+        Swal.close();
+        if (response.data.msg === "success") {
+          Swal.fire({
+            title: "Sucesso!",
+            text: "Redação salva com sucesso.",
+            icon: "success",
+            confirmButtonText: "OK"
+          });
+        } else {
+          Swal.fire({
+            title: "Erro",
+            text: "Erro ao salvar a redação.",
+            icon: "error",
+            confirmButtonText: "Tentar novamente"
+          });
+        }
+      }).catch((error) => {
+        Swal.close();
+        Swal.fire({
+          title: "Erro",
+          text: "Ocorreu um erro ao tentar salvar sua redação.",
+          icon: "error",
+          confirmButtonText: "Tentar novamente"
+        });
+        console.error("Erro:", error);
+      });
+    }
+  });
+}

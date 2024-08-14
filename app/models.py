@@ -135,6 +135,16 @@ class SessionStudie(db.Model):
     self.tempo = tempo
     self.id = id
 
+class Redacao(db.Model):
+  user = db.Column(db.String())
+  titulo = db.Column(db.String())
+  texto = db.Column(db.String(), primary_key=True)
+
+  def __init__(self, user, titulo, texto):
+    self.user = user 
+    self.titulo = titulo 
+    self.texto = texto
+
 
 with app.app_context():
   db.create_all()
