@@ -1,4 +1,4 @@
-from flask import render_template, request, session, jsonify, redirect, url_for, make_response
+from flask import render_template, request, session, jsonify, redirect, url_for, make_response, Response
 from flask.json import jsonify
 from app.routes import users_bp
 from app.models import User, Files, Duvidas, Respostas, Complementos, buscas, Grupo, Artigo
@@ -134,3 +134,19 @@ def delete_group():
         db.session.delete(group)
         db.session.commit()
     return redirect("/admin/28092007")
+
+@users_bp.route('/robots.txt')
+def robots_txt():
+    robots_txt_content = """
+    User-agent: *
+    Disallow: /admin/
+    Disallow: /user/
+    Disallow: /settings/
+    Disallow: /private/
+
+    User-agent: Googlebot
+    Allow: /public/
+
+    Sitemap: https://learnloop.site/sitemap.xml
+    """
+    return Response(robots_txt_content, mimetype='text/plain')
