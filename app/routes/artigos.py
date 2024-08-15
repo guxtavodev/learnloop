@@ -32,7 +32,7 @@ def redacion():
         redacoes = Redacao.query.filter_by(user=user).all()
         return render_template("treino-redacao.html", redacoes=redacoes)
     except Exception as e:
-        return print(f"Erro: {e}")
+        return redirect("/login")
 
 # Rota para criar um artigo (pode ser acessada via POST ou GET)
 @artigos_bp.route("/create-artigo", methods=["POST", "GET"])
