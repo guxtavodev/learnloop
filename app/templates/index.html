@@ -109,7 +109,7 @@
 {% block content %}
 <div class="container">
   <h3><span id="username-placeholder"></span></h3>
-  <p>Explore os mais recentes artigos do LearnLoop!</p>
+  <p>Explore os mais recentes conteúdos do LearnLoop!</p>
   <div id='ultimos-artigos' class="list-artigos">
     {% for artigo in artigos %}
     <div onclick="window.location.href = '/artigo/{{artigo.id}}'" class="artigo">
@@ -118,6 +118,7 @@
     </div>
     {% endfor %}
   </div>
+  <a style="text-decoration: underline; margin-top: -0.5em; color:#C0C0C0; " href="/feed/artigos">Ver todos os conteúdos...</a>
   <p>Siga nosso Instagram para ficar por dentro das atualizações, tirar dúvidas e ver tutoriais sobre o site: <a href='https://instagram.com/learnloop.of' style='color: #fff;'>@learnloop.of clique aqui para ir direto para nosso perfil</a> </p>
 </div>
 <!--
