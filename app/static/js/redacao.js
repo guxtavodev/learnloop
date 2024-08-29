@@ -11,17 +11,17 @@ function redacao() {
     if (r.data.msg === "success") {
       document.getElementById("resposta").innerHTML = r.data.response;
     } else {
-      document.getElementById("resposta").innerHTML = "Erro ao enviar redação";
+      document.getElementById("resposta").innerHTML = "Houve um erro ao corrigir sua redação, tente novamente! Se o erro persistir, entre em contato pelo nosso Instagram: @learnloop.site e informe que deu erro ao corrigir sua redação que vamos te dar todo o suporte necessário e o mais rápido possível!";
     }
   }).catch((error) => {
-    document.getElementById("resposta").innerHTML = "Erro ao enviar redação";
+    document.getElementById("resposta").innerHTML = "Houve um erro ao corrigir sua redação, tente novamente! Se o erro persistir, entre em contato pelo nosso Instagram: @learnloop.of e informe que deu erro ao corrigir sua redação que vamos te dar todo o suporte necessário e o mais rápido possível!";
     console.error("Erro:", error);
   });
 }
 
 Swal.fire({
-  title: "Conheça o Treino de Redação",
-  text: "Mano, aqui é o local pra você mandar a sua redação e receber umas dicas maneiras do Learn.Ai, a inteligência artificial do LearnLoop! Isso é tipo o esquema perfeito pra estudar, né não? E relaxa, a sua redação não fica salva na nossa base de dados, tudo suave! Tamo junto na missão de melhorar esse textão pro ENEM, bora nessa? ✍️💡",
+  title: "Conheça o Corretor de Redação",
+  text: "Envie sua redação para receber orientações do Learn.Ai, a inteligência artificial do LearnLoop. Você pode digitar ou enviar uma foto da redação manuscrita. Se quiser, pode salvar a redação na sua conta, mas isso é opcional. Não se preocupe, sua redação só será armazenada se você optar por isso. Estamos aqui para ajudar você a se preparar para o ENEM. 💡",
   icon: 'info'
 });
 
