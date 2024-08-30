@@ -346,7 +346,7 @@ def carregar_redacao():
         img = Image.open(image_path)
 
         # Utilizar o modelo Gemini para extrair o texto
-        model = genai.GenerativeModel(model_name="gemini-1.5-pro",
+        model = genai.GenerativeModel(model_name="gemini-1.0-pro",
                                      system_instruction="Você é uma Inteligência Artificial que digitaliza redações manuscritas que o usuário enviar.")
         response = model.generate_content(["Digitalize a redação manuscrita pelo usuário.", img])
 
@@ -379,7 +379,7 @@ def gerar_artigo():
         genai.configure(api_key=os.environ["API_KEY"])
         img = Image.open(image_path)
 
-        model = genai.GenerativeModel(model_name="gemini-1.5-pro")
+        model = genai.GenerativeModel(model_name="gemini-1.0-pro")
         response = model.generate_content(["Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base no conteúdo do caderno do usuário no qual ele enviou imagem. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos.", img])
 
         texto_extraido = response.text
