@@ -210,7 +210,7 @@ def gerarAvaliacaoPorIa():
         genai.configure(api_key=os.environ["API_KEY"])
         model = genai.GenerativeModel(
             model_name="gemini-1.5-flash",
-            system_instruction="Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua pontuação"
+            system_instruction="Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua notas, e seja gentil. Elogie também."
         )
         response = model.generate_content(f"Titulo: {data['title']}. Redação: {data['content']}")
 
@@ -379,7 +379,7 @@ def gerar_artigo():
         genai.configure(api_key=os.environ["API_KEY"])
         img = Image.open(image_path)
 
-        model = genai.GenerativeModel(model_name="gemini-1.0-pro")
+        model = genai.GenerativeModel(model_name="gemini-1.5-pro")
         response = model.generate_content(["Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base no conteúdo do caderno do usuário no qual ele enviou imagem. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos.", img])
 
         texto_extraido = response.text
