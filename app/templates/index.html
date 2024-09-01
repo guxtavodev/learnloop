@@ -1,16 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}LearnLoop One | Página Inicial{% endblock %}
+{% block title %}LearnLoop | Página Inicial{% endblock %}
 
 {% block metas %}
 <title>LearnLoop | Página Inicial</title>
-<meta name="description" content="A LearnLoop é a maior plataforma de estudos do Brasil, impulsionada pela Inteligência Artificial! Criada por estudantes para estudantes, junte-se à revolução educacional!">
-<meta name="keywords" content="plataforma de estudos, site para estudos, inteligência artificial para estudos, plataforma educacional online, aprendizado online, aprendizado personalizado, recursos educacionais interativos, estudos descontraído">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2345353716426198"
-     crossorigin="anonymous"></script>
+<meta name="description" content="A LearnLoop é uma plataforma de estudos impulsionada pela Inteligência Artificial, criada para transformar a educação no Brasil. Junte-se à nossa revolução educacional!">
+<meta name="keywords" content="plataforma de estudos, inteligência artificial, aprendizado online, recursos educacionais">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2345353716426198" crossorigin="anonymous"></script>
 
-
-<!-- Hotjar Tracking Code for https://learnloop.site -->
 <script>
     (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -25,10 +22,6 @@
 
 {% block styled %}
 <style>
-
-
-
-  
   /* Estilos dos botões e artigos */
   .mapa-btn {
     display: flex;
@@ -64,11 +57,11 @@
   }
 
   .mapa-btn button:hover::before {
-    width: 400%; /* Ajuste o tamanho para fazer a cor parecer mais clara */
-    height: 400%; /* Ajuste o tamanho para fazer a cor parecer mais clara */
-    top: -150%; /* Ajuste a posição para centralizar o brilho */
-    left: -150%; /* Ajuste a posição para centralizar o brilho */
-    background-color: rgba(255, 255, 255, 0.3); /* Cor mais clara ao passar o mouse */
+    width: 400%;
+    height: 400%;
+    top: -150%;
+    left: -150%;
+    background-color: rgba(255, 255, 255, 0.3);
   }
 
   .mapa-btn button span {
@@ -106,6 +99,17 @@
     transform: translateX(0);
   }
 
+  .list-videos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+  }
+
+  iframe {
+    border: none;
+    border-radius: 16px;
+  }
+
   /* Estilos responsivos */
   @media screen and (max-width: 1000px) {
     .mapa-btn button {
@@ -123,15 +127,14 @@
 
 <div class="container">
   <section onclick="window.location.href='https://instagram.com/ogustavo.developer">
-    <img src="{{url_for('static', filename='img/ads-3.png')}}" alt="Anúncio">
-  </section>
+    <img src="{{url_for('static', filename='img/ads-3.png')}}">
+  </section> 
 </div>
-
 
 <div class="container">
   <h3><span id="username-placeholder"></span></h3>
   <p>Explore os mais recentes conteúdos do LearnLoop!</p>
-  <div id='ultimos-artigos' class="list-artigos">
+  <div id="ultimos-artigos" class="list-artigos">
     {% for artigo in artigos %}
     <div onclick="window.location.href = '/artigo/{{artigo.id}}'" class="artigo">
       <strong>{{artigo.titulo}}</strong>
@@ -139,41 +142,41 @@
     </div>
     {% endfor %}
   </div>
-  <a style="text-decoration: underline; margin-top: -0.5em; color:#C0C0C0; " href="/feed/artigos">Ver todos os conteúdos...</a>
-  <p>Siga nosso Instagram para ficar por dentro das atualizações, tirar dúvidas e ver tutoriais sobre o site: <a href='https://instagram.com/learnloop.of' style='color: #fff;'>@learnloop.of clique aqui para ir direto para nosso perfil</a> </p>
+  <button onclick="window.location.href='/feed/artigos'">Ver Todos os Conteúdos...</button>
+  <p>Siga nosso Instagram para ficar por dentro das atualizações, tirar dúvidas e ver tutoriais sobre o site: <a href="https://instagram.com/learnloop.of" style="color: #fff;">@learnloop.of clique aqui para ir direto para nosso perfil</a></p>
 </div>
 
-
-
-
-<!--
-<div class="container">
-<ins
-	class="adupeex"
-	data-ad-client="up-ba-332046"
-	data-ad-slot="37599"
-	data-ad-display="horizontal"
-	style="display:block;background-color: transparent;"
->
-</ins> 
-<script src="https://upeex.com.br/adsupeex.js" async>
-</script>
-</div>-->
 <div class="container">
   <h3>Escolha uma opção:</h3>
   <div class="mapa-btn">
     <button onclick="window.location.href='/feed/duvidas'"><span>Fórum de Dúvidas</span></button>
-    <button onclick="window.location.href = '/feed/artigos'"><span>Feed de Artigos</span></button>
-    <button onclick="window.location.href = '/avaliar-redacao'"><span>Corretor de Redação</span></button>
-    <button onclick="window.location.href= '/session'"><span>Sessão de Estudos</span></button>
-    
-    <button onclick="window.location.href = '/feed/projetos-feciba'"><span>Projetos FECIBA</span></button>
-  <!--  <button onclick="window.location.href = '/groups'"><span>Grupos de trabalho</span></button> -->
+    <button onclick="window.location.href='/feed/artigos'"><span>Feed de Artigos</span></button>
+    <button onclick="window.location.href='/avaliar-redacao'"><span>Corretor de Redação</span></button>
+    <button onclick="window.location.href='/session'"><span>Sessão de Estudos</span></button>
+    <button onclick="window.location.href='/feed/projetos-feciba'"><span>Projetos FECIBA</span></button>
   </div>
 </div>
 
+<div class="container">
+  <h3>Vídeos Educacionais Auxiliares</h3>
+
+  <div class="list-videos">
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/x4k8950MVeg"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/sBlXzsSAczQ"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/xuIkJ8SULrE"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/wOSi4yUzmwk"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/Iq8ddvaPELU"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/fTbHedKzX48"></iframe>
+  </div>
+</div>
+
+
 <script>
-  /* Função para simular a digitação do nome do usuário */
   function typeUsername(element, text, delay = 100) {
     let index = 0;
     function type() {
@@ -186,31 +189,22 @@
     type();
   }
 
-  /* Função para exibir os artigos com animação */
   function showArticles() {
     const articles = document.querySelectorAll('.artigo');
     articles.forEach((article, index) => {
       setTimeout(() => {
         article.classList.add('show');
-      }, index * 400); // Ajuste o tempo conforme necessário
+      }, index * 400);
     });
   }
 
-  /* Função para determinar o emoji com base no horário */
   function getEmojiByTime() {
     const hour = new Date().getHours();
-    let emoji;
-    if (hour >= 5 && hour < 12) {
-      emoji = '☀️'; // Manhã
-    } else if (hour >= 12 && hour < 18) {
-      emoji = '🌤️'; // Tarde
-    } else {
-      emoji = '🌙'; // Noite
-    }
-    return emoji;
+    if (hour >= 5 && hour < 12) return '☀️';
+    if (hour >= 12 && hour < 18) return '🌤️';
+    return '🌙';
   }
 
-  /* Evento disparado após o carregamento do DOM */
   document.addEventListener('DOMContentLoaded', function() {
     const usernameElement = document.getElementById('username-placeholder');
     const username = '{{user.username}}' || 'Visitante';
@@ -219,5 +213,4 @@
     showArticles();
   });
 </script>
-
 {% endblock %}
