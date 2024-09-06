@@ -19,7 +19,7 @@ def homepage():
             user_db = User.query.filter_by(id=user).first()
         else:
             user_db = None
-        ultimos_artigos = Artigo.query.order_by(desc(Artigo.likes)).limit(6).all()
+        ultimos_artigos = Artigo.query.order_by(desc(Artigo.likes)).limit(12).all()
         return render_template("index.html", user=user_db, artigos=ultimos_artigos)
     except:
         return render_template("index.html")
