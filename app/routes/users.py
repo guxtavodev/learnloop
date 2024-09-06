@@ -7,6 +7,14 @@ from app import db
 import uuid
 import markdown
 
+@users_bp.route("/termos-de-uso")
+def termosDeUso():
+    return render_template("termos.html")
+
+@users_bp.route("/politica-de-privacidade")
+def politicaPrivacidade():
+    return render_template("privacidade.html")
+
 @users_bp.route("/guia")
 def guia():
   return render_template("guia.html")

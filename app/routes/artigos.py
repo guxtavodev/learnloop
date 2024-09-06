@@ -334,7 +334,7 @@ def carregar_redacao():
 
         foto = request.files['foto']
         filename = foto.filename
-
+        print(filename)
         # Gerar um caminho seguro para a imagem temporária
         image_path = os.path.join('/tmp', filename)
 
