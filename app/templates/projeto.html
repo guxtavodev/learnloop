@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <h2>{{ projeto.title}}</h2>
+  <p><strong>Resumo:</strong> {{ projeto.resumo | safe}}</p>
+
+  <br>
+  <img src="{{projeto.image_url}}" />
+  <button onclick="window.location.href='{{projeto.project_url}}'">Fazer Download do Projeto completo</button>
+  <br><br>
+  {{ btnExcluir | safe }}
+</div>
+
+{% endblock %}

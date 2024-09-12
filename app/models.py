@@ -145,6 +145,22 @@ class Redacao(db.Model):
     self.titulo = titulo 
     self.texto = texto
 
+class Feciba(db.Model):
+  title = db.Column(db.String())
+  resumo = db.Column(db.String())
+  id = db.Column(db.String(), primary_key=True)
+  image_url = db.Column(db.String())
+  project_url = db.Column(db.String())
+  author = db.Column(db.String())
+
+  def __init__(self, title, resumo, id, image_url, project_url, author):
+    self.title = title 
+    self.resumo = resumo 
+    self.id = id 
+    self.image_url = image_url
+    self.project_url = project_url 
+    self.author = author 
+
 
 with app.app_context():
   db.create_all()
