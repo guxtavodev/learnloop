@@ -93,5 +93,6 @@ def pageProjeto(id):
       else:
           return render_template("projeto.html", projeto=projeto, btnExcluir="")
     except Exception as e:
-        return print(f"erro: {e}")
+        print(f"erro: {e}")
+        return redirect("/login")
         
