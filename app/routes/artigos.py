@@ -42,6 +42,7 @@ def criarArtigo():
         conteudo = request.form["conteudo-art"]
         categoria = request.form["category"]
         tags = request.form["tags"]
+    
 
         if title == "" or title == " " or len(conteudo) < 1:
             return "Digite algo válido!"
@@ -207,10 +208,11 @@ def feed_artigos():
 def gerarAvaliacaoPorIa():
     try:
         data = request.get_json()
+        print(data["nivel"])
         genai.configure(api_key=os.environ["API_KEY"])
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
-            system_instruction="Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua notas, e seja gentil e elogie bastante para motivar o estudante a continuar aprimorando. O nível de conhecimento dos usuários é: Ensino Médio."
+            model_name="gemini-1.5-pro",
+            system_instruction=f"Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua notas, e seja gentil e elogie bastante para motivar o estudante a continuar aprimorando. O nível de conhecimento dos usuários é: {data['nivel']}"
         )
         response = model.generate_content(f"Titulo: {data['title']}. Redação: {data['content']}")
 

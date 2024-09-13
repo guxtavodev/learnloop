@@ -6,7 +6,8 @@ function redacao() {
   
   axios.post("/learn-ai/redacao", {
     title: title.value,
-    content: conteudo.value
+    content: conteudo.value,
+    nivel: document.getElementById("nivel").value
   }).then((r) => {
     if (r.data.msg === "success") {
       document.getElementById("resposta").innerHTML = r.data.response;

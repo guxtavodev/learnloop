@@ -26,7 +26,13 @@
 
   <div class="form">
     <input id="titulo" type="text" placeholder="Digite o título de sua redação">
-
+<label for="nivel">Selecione o nível de ensino:</label>
+  <select id="nivel">
+    <option value="Ensino Fundamental Anos Finais">Ensino Fundamental (Anos Finais)</option>
+    <option value="1° ano Ensino Médio">1° Ano do Ensino Médio</option>
+    <option value="2° ano Ensino Médio">2° Ano do Ensino Médio</option>
+    <option value="3° ano Ensino Médio" selected>3° Ano do Ensino Médio</option>
+  </select>
     <textarea id="conteudo" placeholder="Digite sua redação"></textarea>
   </div>
   <button onclick="redacao()">Enviar</button>
