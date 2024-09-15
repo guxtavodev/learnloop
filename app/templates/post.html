@@ -17,8 +17,9 @@
     gap: 1em;
   }
 
-  .container h3 {
+  .container h1 {
     line-height: 0.9em;
+    
   }
 
   li {
@@ -28,8 +29,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <h3>{{artigo.titulo}}</h3>
+<article class="container">
+  <h1>{{artigo.titulo}}</h1>
   <small>Criado por: {{autor.username}}</small>
 
   <div class="container">
@@ -67,7 +68,7 @@
     {% endif %}
     <button style="margin-top: 1em;" onclick="copiarToken('https://learnloop.site/artigo/{{artigo.id}}')">Copiar Link do artigo</button>
   </div>
-</div>
+</article>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>

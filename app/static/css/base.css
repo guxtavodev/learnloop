@@ -61,8 +61,10 @@ button{
   font-weight: 700;
 }
 
-header h1{
+header span{
   font-family: var(--fontTitle);
+  font-size: 2em;
+  font-weight: 700;
 }
 
 nav a{

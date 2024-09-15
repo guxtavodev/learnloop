@@ -235,7 +235,7 @@ def gerarArtigoPorIa():
             genai.configure(api_key=os.environ["API_KEY"])
             model = genai.GenerativeModel(
                 model_name="gemini-1.5-flash",
-                system_instruction="Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos."
+                system_instruction="Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos, não coloque título nem subtítulo nenhum, apenas negrito, emojis etc."
             )
             response = model.generate_content(f"Resumo: {data['resumo']}")
 

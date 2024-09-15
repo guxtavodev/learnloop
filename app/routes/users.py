@@ -116,14 +116,14 @@ def admin_panel():
     return render_template('admin.html', users=users, searches=searches, articles=articles, groups=groups, files=files)
 
 # Rota para excluir um artigo
-@users_bp.route('/delete_article', methods=['POST'])
+@users_bp.route('/delete_article')
 def delete_article():
-    article_id = request.form.get('article_id')
-    article = Artigo.query.get(article_id)
-    if article:
-        db.session.delete(article)
+    artigos = Artigo.query.all()
+    for art in artigos:
+        db.session.delete(art)
         db.session.commit()
-    return redirect("/admin/28092007")
+
+    return "todos deletados."
 
 # Rota para excluir um arquivo
 @users_bp.route('/delete_file/<file_id>', methods=['POST'])
