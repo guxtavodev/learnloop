@@ -186,6 +186,16 @@
     <iframe width="500" height="315" src="https://www.youtube.com/embed/Iq8ddvaPELU"></iframe>
 
     <iframe width="500" height="315" src="https://www.youtube.com/embed/fTbHedKzX48"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/apvlwKNpn5A"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/hxciSW_B8Hw"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/HfBrVaqxkAs"></iframe>
+
+    <iframe width="500" height="315" src="https://www.youtube.com/embed/xuIkJ8SULrE"></iframe>
+
+    
   </div>
 </div>
 
@@ -195,7 +205,7 @@
 </footer>
 
 <script>
-  function typeUsername(element, text, delay = 100) {
+  function typeUsername(element, text, delay =0) {
     let index = 0;
     function type() {
       if (index < text.length) {
@@ -212,7 +222,7 @@
     articles.forEach((article, index) => {
       setTimeout(() => {
         article.classList.add('show');
-      }, index * 400);
+      }, index * 100);
     });
   }
 
