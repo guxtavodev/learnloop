@@ -12,6 +12,10 @@
   .form input, textarea {
     width: 100%;
   }
+
+  #resposta li {
+    margin-left: 1.2em;
+  }
 </style>
 {% endblock %}
 
@@ -23,7 +27,10 @@
 </div>
 <div class="container">
   <h3>Treino de Redação</h3>
-
+  {% if not session["user"] %}
+  <span class="alert">Você precisa ter uma conta para usar este recurso! <a href="/span">clique aqui para se cadastrar</a></span>
+  {% endif %}
+  
   <div class="form">
     <input id="titulo" type="text" placeholder="Digite o título de sua redação">
 <label for="nivel">Selecione o nível de ensino:</label>
@@ -41,7 +48,7 @@
 </div>
 
 <div class="container">
-  <p id="resposta"></p>
+  <p id="resposta" style="display: flex; flex-direction: column; gap: 0.5em;"</p>
 </div>
 
 <div class="container">
