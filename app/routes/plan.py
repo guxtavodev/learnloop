@@ -14,7 +14,7 @@ def planPage():
     try:
         user = session['user']
     except:
-        return render_template("plan", sessions=[])
+        return render_template("plan.html", sessions=[])
     sessoes = SessionStudie.query.filter_by(user=session["user"]).all()
     return render_template("plan.html", sessions=sessoes)
 
