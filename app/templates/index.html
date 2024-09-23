@@ -39,29 +39,7 @@
     border-radius: 6px;
     position: relative;
     overflow: hidden;
-    transition: color 0.3s ease;
-  }
-
-  .mapa-btn button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background-color: rgba(255, 255, 255, 0.1);
-    transition: width 0.5s ease, height 0.5s ease, top 0.5s ease, left 0.5s ease;
-    border-radius: 50%;
-    z-index: 0;
-    transform: translate(-50%, -50%);
-  }
-
-  .mapa-btn button:hover::before {
-    width: 400%;
-    height: 400%;
-    top: -150%;
-    left: -150%;
-    background-color: rgba(255, 255, 255, 0.3);
+    /* Removido o efeito de transição */
   }
 
   .mapa-btn button span {
@@ -76,8 +54,6 @@
   }
 
   .artigo {
-    opacity: 0;
-    transform: translateX(-50px);
     padding: 7px;
     border: none;
     border-radius: 6px;
@@ -86,17 +62,11 @@
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
     width: 40%;
   }
 
   .artigo:hover {
     background-color: rgba(255, 255, 255, 0.3);
-  }
-
-  .show {
-    opacity: 1;
-    transform: translateX(0);
   }
 
   .list-videos {
@@ -120,7 +90,7 @@
 
   footer a {
     color: black;
-      }
+  }
 
   /* Estilos responsivos */
   @media screen and (max-width: 1000px) {
@@ -194,8 +164,6 @@
     <iframe width="500" height="315" src="https://www.youtube.com/embed/HfBrVaqxkAs"></iframe>
 
     <iframe width="500" height="315" src="https://www.youtube.com/embed/wW_O-ciasCs"></iframe>
-
-    
   </div>
 </div>
 
@@ -205,40 +173,11 @@
 </footer>
 
 <script>
-  function typeUsername(element, text, delay =0) {
-    let index = 0;
-    function type() {
-      if (index < text.length) {
-        element.textContent += text.charAt(index);
-        index++;
-        setTimeout(type, delay);
-      }
-    }
-    type();
-  }
-
-  function showArticles() {
-    const articles = document.querySelectorAll('.artigo');
-    articles.forEach((article, index) => {
-      setTimeout(() => {
-        article.classList.add('show');
-      }, index * 100);
-    });
-  }
-
-  function getEmojiByTime() {
-    const hour = new Date().getHours();
-    if (hour >= 5 && hour < 12) return '☀️';
-    if (hour >= 12 && hour < 18) return '🌤️';
-    return '🌙';
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
     const usernameElement = document.getElementById('username-placeholder');
     const username = '{{user.username}}' || 'Visitante';
-    const greeting = `Olá, ${username} ${getEmojiByTime()}`;
-    typeUsername(usernameElement, greeting);
-    showArticles();
+    const greeting = `Olá, ${username}`;
+    usernameElement.textContent = greeting;
   });
 </script>
 {% endblock %}
