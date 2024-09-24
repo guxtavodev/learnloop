@@ -73,7 +73,7 @@ textarea {
             <p id="tempo-estudado">00:00:00</p>
             <div class="group-bottons">
                 <button id="iniciar">Iniciar</button>
-                <button id="parar">Parar</button>
+                <button id="parar">Pausar</button>
             </div>
         </div>
         <textarea id="resumo" placeholder="Digite aqui suas anotações"></textarea>
@@ -186,10 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function pararCronometro() {
-        clearInterval(cronometroInterval);
-        tempoEstudado = 0;
-        document.getElementById('tempo-estudado').innerText = formatarTempo(tempoEstudado);
-        cronometroRodando = false;
+        pausarCronometro(); 
     }
 
     document.querySelector('#iniciar').addEventListener('click', function() {
@@ -200,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.querySelector('#parar').addEventListener('click', pararCronometro);
+    document.querySelector('#parar').addEventListener('click', pausarCronometro);
 
     document.getElementById('aprimorar').addEventListener('click', function() {
         const anotacoes = document.getElementById('resumo').value;
