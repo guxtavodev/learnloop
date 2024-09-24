@@ -239,7 +239,7 @@ def gerarArtigoPorIa():
             data = request.get_json()
             genai.configure(api_key=os.environ["API_KEY"])
             model = genai.GenerativeModel(
-                model_name="gemini-1.5-flash",
+                model_name="gemini-1.5-pro",
                 system_instruction="Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos, não coloque título nem subtítulo nenhum, apenas negrito, emojis etc."
             )
             response = model.generate_content(f"Resumo: {data['resumo']}")
@@ -316,7 +316,7 @@ def tiraDuvidaArtigo():
 
         genai.configure(api_key=os.environ["API_KEY"])
         model = genai.GenerativeModel(
-                model_name="gemini-1.5-flash",
+                model_name="gemini-1.5-pro",
                 system_instruction="Você é uma Inteligência Artificial, que tira dúvida de um artigo. Você pode usar a base do artigo ou pegar outras referências. O importante é o usuário entender de vez o assunto. Responda de forma descontraída e não deixe o usuário fugir muito do artigo."
             )
         response = model.generate_content(user_message)
