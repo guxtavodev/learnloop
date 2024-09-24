@@ -1,40 +1,37 @@
-# LearnLoop One (2024)
+# LearnLoop
 
-Bem-vindo ao repositório do LearnLoop One, a próxima geração da nossa plataforma educacional inovadora!
+**LearnLoop** é uma plataforma de aprendizado focada em estudantes do Ensino Médio, especialmente aqueles que estão se preparando para o ENEM. Utilizando Inteligência Artificial, o LearnLoop oferece ferramentas para otimizar o tempo de estudo, aprimorar a escrita e fornecer suporte nas principais disciplinas do exame.
 
-![LearnLoop One](link_da_imagem.png)
+## Funcionalidades
 
-## Sobre o LearnLoop One
+- **Corretor de Redações:** Os usuários podem tirar fotos de anotações manuscritas ou enviar redações diretamente para correção. O sistema usa IA para corrigir redações com base nos critérios do ENEM, oferecendo sugestões de melhoria.
+  
+- **Sessões de Estudo:** Gerenciador de sessões de estudo que auxilia na organização do tempo e na definição de metas para cada sessão.
 
-O LearnLoop One é a evolução do nosso Micro SaaS de sucesso, projetado para revolucionar a forma como os estudantes aprendem e colaboram. Com recursos aprimorados e uma experiência de usuário melhorada, estamos comprometidos em fornecer um ambiente de aprendizado mais dinâmico e envolvente.
+- **Feed de Artigos:** A plataforma oferece um feed de artigos educacionais que abordam temas diversos para aprimorar o conhecimento dos estudantes.
 
-## Principais Recursos
+- **Fórum de Dúvidas:** Espaço colaborativo onde os estudantes podem compartilhar dúvidas e aprender uns com os outros.
 
-- **Quizzes Interativos:** Teste seus conhecimentos com quizzes interativos e desafiadores em uma variedade de tópicos.
+- **Mostra Virtual da FECIBA:** Estudantes podem publicar e compartilhar seus projetos de iniciação científica, incentivando a troca de conhecimento e experiências.
 
-- **LearnLoop Groups:** Colabore em projetos, compartilhe anotações e trabalhe em equipe com o LearnLoop Groups.
+## Como Usar
 
-- **Learn.Ai Melhorado:** A inteligência artificial Learn.Ai está ainda mais inteligente e eficaz na geração de conteúdo de alta qualidade.
+1. Acesse o site [learnloop.com.br](https://learnloop.com.br/).
+2. Crie uma conta ou faça login.
+3. Explore as ferramentas de correção de redação, sessões de estudo e feed de artigos.
+4. Participe do fórum de dúvidas e publique seus projetos na Mostra Virtual.
 
-- **Novo Design Intuitivo:** Experimente uma interface de usuário aprimorada e um design moderno que torna a navegação no LearnLoop ainda mais fácil.
+## Tecnologias Utilizadas
 
-## Começando
-
-1. Clone este repositório em sua máquina local.
-2. Siga as instruções de instalação no arquivo `INSTALL.md`.
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Flask (Python)
+- **Banco de Dados:** SQLite
+- **Infraestrutura:** Hospedado no Azure
 
 ## Contribuindo
 
-Gostaria de contribuir para o LearnLoop One? Ficaríamos felizes em receber sua ajuda! Por favor, siga nossas diretrizes de contribuição no arquivo `CONTRIBUTING.md`.
-
-## Contato
-
-- Site: [LearnLoop](https://www.learnloop.site)
-- E-mail: contato@learnloop.one
+Sinta-se à vontade para abrir issues ou enviar pull requests com melhorias ou novas funcionalidades. Qualquer contribuição é bem-vinda!
 
 ## Licença
 
-Este projeto é licenciado sob os termos da Licença MIT. Consulte o arquivo `LICENSE` para obter mais detalhes.
-
-O LearnLoop One está mudando a forma como os estudantes aprendem. Junte-se a nós nesta jornada e ajude a moldar o futuro da educação online!
-
+Este projeto está licenciado sob a [MIT License](LICENSE).
