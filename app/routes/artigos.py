@@ -10,6 +10,13 @@ import os
 from docx import Document
 from sqlalchemy import desc
 import google.generativeai as genai
+from openai import AzureOpenAI
+
+client = AzureOpenAI(
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),  
+    api_version="2024-07-01-preview",
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
+)
 
 @artigos_bp.route("/")
 def homepage():
@@ -210,14 +217,17 @@ def gerarAvaliacaoPorIa():
         user = session["user"]
         data = request.get_json()
         print(data["nivel"])
-        genai.configure(api_key=os.environ["API_KEY"])
-        model = genai.GenerativeModel(
-            model_name="gemini-1.5-pro",
-            system_instruction=f"Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua notas, e seja gentil e elogie bastante para motivar o estudante a continuar aprimorando. O nível de conhecimento dos usuários é: {data['nivel']}"
-        )
-        response = model.generate_content(f"Titulo: {data['title']}. Redação: {data['content']}")
 
-        assistant_response = str(response.text)
+        # Fazendo a chamada à API do Azure OpenAI
+        chat_completion = client.chat.completions.create(
+            model="gpt-4o",  # Nome do deployment configurado no Azure
+            messages=[
+                {"role": "system", "content": f"Você é uma IA que avalia redações focando nas informações do usuário, com base nas competências do ENEM e fornecendo insights. O nível do usuário é {data['nivel']}."},
+                {"role": "user", "content": f"Título: {data['title']}. Redação: {data['content']}"}
+            ]
+        )
+
+        assistant_response = chat_completion.choices[0].message.content
 
         newCorrecao = Correcoes(user, data["title"], data["content"], assistant_response)
         db.session.add(newCorrecao)
@@ -227,7 +237,8 @@ def gerarAvaliacaoPorIa():
             "msg": "success",
             "response": markdown.markdown(assistant_response)
         })
-    except Exception:
+
+    except Exception as e:
         return redirect('/login')
 
 @artigos_bp.route("/api/gerar-artigo-ai", methods=["POST"])
@@ -237,101 +248,69 @@ def gerarArtigoPorIa():
         userDb = User.query.filter_by(id=user).first()
         if userDb:
             data = request.get_json()
+<<<<<<< HEAD
+=======
             genai.configure(api_key=os.environ["API_KEY"])
             model = genai.GenerativeModel(
                 model_name="gemini-1.5-pro",
                 system_instruction="Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos, não coloque título nem subtítulo nenhum, apenas negrito, emojis etc."
             )
             response = model.generate_content(f"Resumo: {data['resumo']}")
+>>>>>>> 7edc80c3dbeb4abd340b5741ac401c06adb04f7e
 
-            assistant_response = response.text
-            return jsonify({
-                "msg": "success",
-                "response": assistant_response
-            })
-    except Exception as e:
-        return print(f"Erro: {e}")
-
-@artigos_bp.route("/quiz")
-def quizPage():
-    return render_template("quiz.html")
-
-@artigos_bp.route("/gerar/quiz", methods=["POST"])
-def gerarQuizPorIa():
-    try:
-        user = session.get('user')
-        if user is None:
-            return jsonify({"msg": "error", "error": "Usuário não autenticado"}), 401
-
-        userDb = User.query.filter_by(id=user).first()
-        if userDb is None:
-            return jsonify({"msg": "error", "error": "Usuário não encontrado"}), 404
-
-        data = request.get_json()
-        genai.configure(api_key=os.environ["API_KEY"])
-        model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
-            system_instruction="Você é uma Inteligência Artificial que gera 1 pergunta de acordo com algum resumo que o usuário enviar, se não for um resumo, o usuário enviará apenas o assunto que ele tem dificuldade, e você vai gerar um quiz básico sobre o assunto. Crie com uma linguagem descontraída e autêntica, sem referências a outros sites, blogs, ou artigos já publicados."
-        )
-        response = model.generate_content(f"O que o usuário tem dificuldade: {data['dificuldades']}")
-
-        assistant_response = response.text
-
-        return jsonify({
-            "msg": "success",
-            "response": assistant_response
-        })
-    except Exception as e:
-        return print(e)
-
-@artigos_bp.route("/corrigir/quiz", methods=["POST"])
-def corrigeQuizPorIa():
-    try:
-        user = session['user']
-        userDb = User.query.filter_by(id=user).first()
-        if user:
-            data = request.get_json()
-            genai.configure(api_key=os.environ["API_KEY"])
-            model = genai.GenerativeModel(
-                model_name="gemini-1.5-flash",
-                system_instruction="Você é uma Inteligência Artificial que faz a correção de um quiz com perguntas e respostas que o usuário enviar, você vai explicar onde o usuário errou ou acertou, e vai dar dicas de como acertar na próxima, corrija de forma descontraída e leve."
+            # Fazendo a chamada à API do Azure OpenAI
+            chat_completion = client.chat.completions.create(
+                model="gpt-4o",  # Nome do deployment configurado no Azure
+                messages=[
+                    {"role": "system", "content": "Você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário, com linguagem informal e atraente."},
+                    {"role": "user", "content": f"Resumo: {data['resumo']}"}
+                ]
             )
-            response = model.generate_content(f"Questões: {data['perguntas']}. Respostas do usuário: {data['respostas']}")
 
-            assistant_response = response.text
-            print(assistant_response)
+            assistant_response = chat_completion.choices[0].message.content
+
             return jsonify({
                 "msg": "success",
                 "response": assistant_response
             })
     except Exception as e:
-        return redirect(f'Erro: {str(e)}')
+        return jsonify({"msg": f"Erro: {e}"})
 
-
-@artigos_bp.route('/api/tirar-duvida-artigo', methods=["POST"])
+@artigos_bp.route("/api/tirar-duvida-artigo", methods=["POST"])
 def tiraDuvidaArtigo():
     try:  
         data = request.get_json()
         user_message = f"Artigo: {data['conteudo_artigo']}. Dúvida: {data['duvida']}"
 
+<<<<<<< HEAD
+        # Fazendo a chamada à API do Azure OpenAI
+        chat_completion = client.chat.completions.create(
+            model="gpt-4o",  # Nome do deployment configurado no Azure
+            messages=[
+                {"role": "system", "content": "Você responde dúvidas sobre o conteúdo de artigos de forma clara e direta."},
+                {"role": "user", "content": user_message}
+            ]
+        )
+
+        assistant_response = chat_completion.choices[0].message.content
+=======
         genai.configure(api_key=os.environ["API_KEY"])
         model = genai.GenerativeModel(
                 model_name="gemini-1.5-pro",
                 system_instruction="Você é uma Inteligência Artificial, que tira dúvida de um artigo. Você pode usar a base do artigo ou pegar outras referências. O importante é o usuário entender de vez o assunto. Responda de forma descontraída e não deixe o usuário fugir muito do artigo."
             )
         response = model.generate_content(user_message)
+>>>>>>> 7edc80c3dbeb4abd340b5741ac401c06adb04f7e
 
-        assistant_response = response.text
-        print(assistant_response)
         return jsonify({
-                "msg": "success",
-                "resposta": assistant_response
-            })
+            "msg": "success",
+            "resposta": assistant_response
+        })
     except Exception as e:
-        return print(f"Houve um erro: {str(e)}")
+        return jsonify({"msg": f"Houve um erro: {e}"})
 
 from PIL import Image  # Adicionado
-
+import base64
 @artigos_bp.route("/api/carregar-redacao", methods=["POST"])
 def carregar_redacao():
     try:
