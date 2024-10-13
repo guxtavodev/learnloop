@@ -7,7 +7,13 @@ import uuid
 import markdown
 import os
 import datetime
-import google.generativeai as genai
+from openai import AzureOpenAI
+
+client = AzureOpenAI(
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    api_version="2024-07-01-preview",
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT")
+)
 
 @iaplan_bp.route("/session")
 def planPage():
@@ -67,14 +73,16 @@ def getResumo():
         anotacoes = data["notes"]
         user_message = {"role": "user", "content": f"Minhas anotações: {anotacoes}"}
 
-        genai.configure(api_key=os.environ["API_KEY"])
-        model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
-            system_instruction="Você é uma Inteligência Artificial para estudos. Com base nas anotações que o usuário enviar, você deverá criar um resumo bem estruturado do que ele aprendeu."
+        # Usando o Azure OpenAI para gerar o resumo
+        chat_completion = client.chat.completions.create(
+            model="gpt-4o",  # model = "deployment_name"
+            messages=[
+                {"role": "system", "content": "Você é uma Inteligência Artificial para estudos. Com base nas anotações que o usuário enviar, você deverá criar um resumo bem estruturado do que ele aprendeu."},
+                user_message
+            ]
         )
-        response = model.generate_content(f"Minhas anotações: {anotacoes}")
 
-        resposta = response.text
+        resposta = chat_completion.choices[0].message.content
 
         return jsonify({"msg": resposta})
 
