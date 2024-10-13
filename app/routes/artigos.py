@@ -248,15 +248,7 @@ def gerarArtigoPorIa():
         userDb = User.query.filter_by(id=user).first()
         if userDb:
             data = request.get_json()
-<<<<<<< HEAD
-=======
-            genai.configure(api_key=os.environ["API_KEY"])
-            model = genai.GenerativeModel(
-                model_name="gemini-1.5-pro",
-                system_instruction="Como a IA Learn.Ai, você gera artigos autônomos longos e bem estruturados, com base na entrada do usuário. Os artigos devem ser descontraídos e autênticos, permitindo referências externas de forma moderada e uma linguagem informal. Acrescente informações relevantes para evitar superficialidade, com orientação para estudantes do Ensino Médio. Use emojis de forma atrativa e incentive os leitores a clicar no botão 'Tirar Dúvida' em caso de questionamentos, não coloque título nem subtítulo nenhum, apenas negrito, emojis etc."
-            )
-            response = model.generate_content(f"Resumo: {data['resumo']}")
->>>>>>> 7edc80c3dbeb4abd340b5741ac401c06adb04f7e
+
 
             # Fazendo a chamada à API do Azure OpenAI
             chat_completion = client.chat.completions.create(
@@ -282,7 +274,7 @@ def tiraDuvidaArtigo():
         data = request.get_json()
         user_message = f"Artigo: {data['conteudo_artigo']}. Dúvida: {data['duvida']}"
 
-<<<<<<< HEAD
+
         # Fazendo a chamada à API do Azure OpenAI
         chat_completion = client.chat.completions.create(
             model="gpt-4o",  # Nome do deployment configurado no Azure
@@ -293,14 +285,7 @@ def tiraDuvidaArtigo():
         )
 
         assistant_response = chat_completion.choices[0].message.content
-=======
-        genai.configure(api_key=os.environ["API_KEY"])
-        model = genai.GenerativeModel(
-                model_name="gemini-1.5-pro",
-                system_instruction="Você é uma Inteligência Artificial, que tira dúvida de um artigo. Você pode usar a base do artigo ou pegar outras referências. O importante é o usuário entender de vez o assunto. Responda de forma descontraída e não deixe o usuário fugir muito do artigo."
-            )
-        response = model.generate_content(user_message)
->>>>>>> 7edc80c3dbeb4abd340b5741ac401c06adb04f7e
+
 
         return jsonify({
             "msg": "success",
