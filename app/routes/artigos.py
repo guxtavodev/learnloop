@@ -222,7 +222,7 @@ def gerarAvaliacaoPorIa():
         chat_completion = client.chat.completions.create(
             model="gpt-4o",  # Nome do deployment configurado no Azure
             messages=[
-                {"role": "system", "content": f"Você é uma IA que avalia redações focando nas informações do usuário, com base nas competências do ENEM e fornecendo insights. O nível do usuário é {data['nivel']}."},
+                {"role": "system", "content": f"Você é uma IA que avalia redações, foque nas informações do usuário, e forneça insights com base em redações nota mil no ENEM. Corrija com base nas competências do ENEM e atribua notas, e seja gentil e elogie bastante para motivar o estudante a continuar aprimorando. O nível de conhecimento dos usuários é: {data['nivel']} e o tema proposto é: {data['tema']}."},
                 {"role": "user", "content": f"Título: {data['title']}. Redação: {data['content']}"}
             ]
         )
