@@ -36,7 +36,7 @@ def homepage():
 def redacion():
     try:
         user = session["user"]
-        redacoes = Redacao.query.filter_by(user=user).all()
+        redacoes = Correcoes.query.filter_by(user=user).all()
         return render_template("treino-redacao.html", redacoes=redacoes)
     except Exception as e:
         return render_template("treino-redacao.html", redacoes=[])
@@ -229,7 +229,7 @@ def gerarAvaliacaoPorIa():
 
         assistant_response = chat_completion.choices[0].message.content
 
-        newCorrecao = Correcoes(user, data["title"], data["content"], assistant_response)
+        newCorrecao = Correcoes(user, data["tema"], data["content"], markdown.markdown(assistant_response))
         db.session.add(newCorrecao)
         db.session.commit()
 
