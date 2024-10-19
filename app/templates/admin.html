@@ -203,6 +203,21 @@
         </ul>
 
       </details>
+
+       <details>
+         <summary>Correções do LearnLoop</summary>
+         <ul>
+             {% for correcao in correcoes %}
+             <li>
+             <details>
+                 <summary>{{correcao.titulo}}</summary>
+                 <p>{{correcao.texto}}</p>
+                 {{correcao.correcao | safe}}
+             </details>
+             </li>
+             {% endfor %}
+         </ul>
+       </details>
     </div>
 
 </body>
