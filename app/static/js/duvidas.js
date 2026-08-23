@@ -104,6 +104,6 @@ function ajudaDinamica() {
 document.addEventListener('DOMContentLoaded', function() {
   const btnsAjuda = document.querySelectorAll('#help-icon');
   btnsAjuda.forEach(function(btn) {
-    btn.onclick = ajudaDinamica; // Sem parênteses!
+    btn.onclick = ajudaDinamica; 
   });
 });
