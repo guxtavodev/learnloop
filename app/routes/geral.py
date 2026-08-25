@@ -1,6 +1,6 @@
 from flask import render_template, request, session, jsonify, make_response, Response
 from app import db
-from app.models import User, Artigo, buscas, Corrections, Revisoes, Simulado, SessionStudie
+from app.models import User, Corrections, Revisoes, Simulado, SessionStudie
 from app.routes import geral_bp
 from datetime import datetime
 
@@ -85,11 +85,9 @@ def sitemap():
 @geral_bp.route('/admin/28092007')
 def admin_panel():
     users = User.query.all()
-    searches = buscas.query.all()
-    articles = Artigo.query.all()
     correcoes = Corrections.query.all()
-    
-    return render_template('admin.html', users=users, searches=searches, articles=articles, correcoes=correcoes)
+ 
+    return render_template('admin.html', users=users, correcoes=correcoes)
 
 # Rota para excluir um artigo
 @geral_bp.route('/delete_article')

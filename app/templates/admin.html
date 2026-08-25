@@ -124,25 +124,6 @@
         <h1>Painel de Administração</h1>
     </header>
 
-    <div class="dashboard">
-        <div class="card">
-            <h2>{{ users|length }}</h2>
-            <span>Usuários</span>
-        </div>
-        <div class="card">
-            <h2>{{ articles|length }}</h2>
-            <span>Artigos</span>
-        </div>
-        <div class="card">
-            <h2>{{ searches|length }}</h2>
-            <span>Buscas</span>
-        </div>
-  
-        <div class="card">
-            <h2>{{ correcoes|length }}</h2>
-            <span>Correções</span>
-        </div>
-    </div>
 
     <div class="container">
       
@@ -157,59 +138,12 @@
                     </li>
                 {% endfor %}
             </ul>
-        </details>
+        </details>    
 
-        <details>
-            <summary>Artigos</summary>
-            <ul>
-                {% for article in articles %}
-                    <li>
-                        <strong>{{ article.titulo }}</strong> — {{ article.autor }} 
-                        <a href="/delete_article/{{ article.id }}" onclick="return confirm('Tem certeza que deseja excluir este artigo?')" style="color:#aeff00;">Excluir</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </details>
+        <p>
+            <strong>Correções feitas no Estudaê: {{ correcoes | length }}</strong>
+        </p>
 
-        <details>
-            <summary>Buscas Recentes</summary>
-            <ul>
-                {% for search in searches %}
-                    <li>{{ search.termo }} <small>({{ search.data }})</small></li>
-                {% endfor %}
-            </ul>
-        </details>
-
-     
-
-        <details>
-            <summary>Correções do LearnLoop</summary>
-            <ul>
-                {% for correcao in correcoes %}
-                <li>
-                    <details>
-                        <summary>{{ correcao.tema }}</summary>
-                        <p>{{ correcao.texto }}</p>
-                        <strong>Correção:</strong> {{ correcao.final | safe }}
-                    </details>
-                </li>
-                {% endfor %}
-            </ul>
-        </details>
-
-        <h3>Excluir Artigo</h3>
-        <form action="/delete_article" method="post">
-            <label for="article_id">ID do Artigo:</label>
-            <input type="text" id="article_id" name="article_id" required>
-            <button type="submit">Excluir</button>
-        </form>
-
-        <h3>Excluir Grupo</h3>
-        <form action="/delete_group" method="post">
-            <label for="group_id">ID do Grupo:</label>
-            <input type="text" id="group_id" name="group_id" required>
-            <button type="submit">Excluir</button>
-        </form>
     </div>
 </body>
 </html>

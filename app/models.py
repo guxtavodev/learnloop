@@ -6,46 +6,12 @@ class User(db.Model):
   username = db.Column(db.String(64), index=True, unique=True)
   email = db.Column(db.String())
   password = db.Column(db.String())
-  
 
   def __init__(self, id, username, email, password):
     self.id = id
     self.username = username
     self.email = email
-    self.password = password
-
-
-class Artigo(db.Model):
-  id = db.Column(db.String(), primary_key=True)
-  titulo = db.Column(db.String(128))
-  texto = db.Column(db.String(1024))
-  autor = db.Column(db.String(64))
-  data = db.Column(db.String(64))
-  categoria = db.Column(db.String(64))
-  tags = db.Column(db.String(64))
-  likes = db.Column(db.Integer)
-  views = db.Column(db.Integer)
-
-  def __init__(self, titulo, texto, autor, data, categoria, tags, likes, id, views):
-    self.titulo = titulo
-    self.texto = texto
-    self.autor = autor
-    self.data = data
-    self.categoria = categoria
-    self.tags = tags
-    self.likes = likes
-    self.id = id
-    self.views = views                  
-  
-  
-class buscas(db.Model):
-  user = db.Column(db.String())
-  termo = db.Column(db.String())
-  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-
-  def __init__(self, user, termo):
-    self.user = user
-    self.termo = termo
+    self.password = password         
 
 class SessionStudie(db.Model):
   user = db.Column(db.String())
@@ -145,20 +111,6 @@ class Pergunta(db.Model):
     self.quiz = quiz
     self.resolucao = resolucao 
 
-class VideoYt(db.Model):
-  id = db.Column(db.String(), primary_key=True)
-  titulo = db.Column(db.String())
-  resumo = db.Column(db.String())
-  transcricao = db.Column(db.String())
-  id_video = db.Column(db.String())
-
-  def __init__(self, id, titulo, resumo, transcricao, id_video):
-    self.id = id
-    self.titulo = titulo 
-    self.resumo = resumo
-    self.transcricao = transcricao 
-    self.id_video = id_video
-
 class Revisoes(db.Model):
   id = db.Column(db.String(), primary_key=True)
   user = db.Column(db.String())
@@ -180,7 +132,7 @@ class Repertorio(db.Model):
   user = db.Column(db.String())
   titulo = db.Column(db.String())
   arquivo = db.Column(db.String())
-  link = db.Column(db.String())  # Novo campo
+  link = db.Column(db.String())  
   eixos = db.Column(db.String())
   autor = db.Column(db.String())
   resumo = db.Column(db.Text)
