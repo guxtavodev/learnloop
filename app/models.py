@@ -6,12 +6,14 @@ class User(db.Model):
   username = db.Column(db.String(64), index=True, unique=True)
   email = db.Column(db.String())
   password = db.Column(db.String())
+  reputacao = db.Column(db.Integer)
 
-  def __init__(self, id, username, email, password):
+  def __init__(self, id, username, email, password, reputacao=0):
     self.id = id
     self.username = username
     self.email = email
-    self.password = password         
+    self.password = password   
+    self.reputacao = reputacao      
 
 class SessionStudie(db.Model):
   user = db.Column(db.String())

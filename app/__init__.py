@@ -10,7 +10,7 @@ app = Flask(__name__)
 load_dotenv()
 
 # Fallback para DATABASE_URL: usa arquivo local learnloop.db se não encontrar variável de ambiente
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL") or "sqlite:///learnloop.db" 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL") or "sqlite:///learnloop98.db" 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '123'
