@@ -181,7 +181,7 @@
 {% block content %}
 
 <div class="container">
-  <h3>Olá, Estudante!</h3>
+  <h3>Olá, estudante!</h3>
 
   {% if session["user"] %}
   <div class="container">
@@ -192,16 +192,16 @@
   
   <div class="dados">
     <h3>Seu desempenho</h3>
-    <p><strong>Redações Enviadas: </strong>{{correcoes}} redações</p>
-    <p><strong>Sessões de Estudos criadas: </strong>{{sessoes}} sessões</p>
+    <p><strong>Redações enviadas: </strong>{{correcoes}} redações</p>
+    <p><strong>Sessões de estudo criadas: </strong>{{sessoes}} sessões</p>
     <p><strong>Quizzes gerados: </strong>{{quiz}} quizzes</p>
   </div>
 
 <div class="revisoes">
-    <h3>Revisões do Dia</h3>
+    <h3>Revisões do dia</h3>
   
     {% if revisoes|length == 0 %}
-      <p>Nenhuma revisão pendente pra hoje.</p>
+      <p>Nenhuma revisão pendente para hoje.</p>
     {% endif %}
 
     {% for rev in revisoes %}
@@ -217,19 +217,19 @@
   <div class="mapa-btn">
     <div>
       <h4>Corretor de Redações</h4>
-      <p>Corrija sua redação com a ajuda da IA! E conte com o apoio em tempo real da Redação Guiada!</p>
+      <p>Corrija sua redação com a ajuda da IA e conte com o apoio em tempo real da Redação Guiada.</p>
       <a href="/redacao">Acesse agora ⟶</a>
     </div>
 
     <div>
       <h4>Caderno Digital</h4>
-      <p>Guarde o que você estudou de forma fácil! Será criada uma página exclusiva onde você poderá guardar documentos e gerar quiz com base em sua anotação para testar conhecimento e fazer revisões</p>
+      <p>Guarde facilmente o que você estudou! Uma página exclusiva será criada para armazenar seus documentos e gerar quizzes com base nas suas anotações. Assim, você poderá testar seus conhecimentos e fazer revisões.</p>
       <a href="/caderno-digital">Acesse agora ⟶</a>
     </div>
  
     <div>
-      <h4>Repertórios Socioculturais</h4>
-      <p>Descubra e explore uma variedade de repertórios socioculturais que enriquecem sua redação do ENEM!</p>
+      <h4>Repertórios socioculturais</h4>
+      <p>Descubra e explore uma variedade de repertórios socioculturais que podem enriquecer sua redação do Enem!</p>
       <a href="/repertorios">Acesse agora ⟶</a>
     </div>
 
