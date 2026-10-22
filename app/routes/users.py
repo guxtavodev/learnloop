@@ -7,10 +7,11 @@ import markdown
 from app.routes import users_bp
 from app.functions.serializers import model_to_dict
 
-# Função de criptografia de senha
+
 def crip(dado):
-    dado_criptografado = bcrypt_sha256.hash(dado)
-    return str(dado_criptografado)
+    dado = str(dado)
+    return bcrypt_sha256.hash(dado)
+
 
 # Rota para o cadastro de um novo usuário via API
 @users_bp.route('/api/signup', methods=["POST"])
@@ -112,3 +113,5 @@ def settings_page():
     if not user:
         return redirect('/login')
     return render_template('settings.html', user=model_to_dict(user))
+
+
